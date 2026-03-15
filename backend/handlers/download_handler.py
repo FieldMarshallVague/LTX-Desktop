@@ -203,15 +203,28 @@ class DownloadHandler(StateHandlerBase):
         src = resolve_downloading_target_path(self.models_dir, self.config.model_download_specs, file_type)
         dst = resolve_model_path(self.models_dir, self.config.model_download_specs, file_type)
 
+        def _robust_rename() -> None:
+            max_retries = 10
+            for attempt in range(max_retries):
+                try:
+                    src.rename(dst)
+                    return
+                except OSError as e:
+                    if attempt < max_retries - 1:
+                        logger.warning("Rename %s -> %s failed (attempt %d): %s", src, dst, attempt + 1, e)
+                        time.sleep(1.0)
+                    else:
+                        raise
+
         if spec.is_folder:
             if dst.exists():
                 shutil.rmtree(dst)
-            src.rename(dst)
+            _robust_rename()
         else:
             if dst.exists():
                 dst.unlink()
             dst.parent.mkdir(parents=True, exist_ok=True)
-            src.rename(dst)
+            _robust_rename()
 
     def cleanup_downloading_dir(self) -> None:
         """Remove stale .downloading/ dir (leftover from crashed downloads)."""

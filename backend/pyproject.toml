@@ -51,3 +51,7 @@ dev = ["pyright>=1.1.380", "debugpy>=1.8"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["tests", "tests.*"]

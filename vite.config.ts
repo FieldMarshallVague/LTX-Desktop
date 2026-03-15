@@ -56,5 +56,10 @@ export default defineConfig({
   base: './',  // Use relative paths for Electron file:// protocol
   build: {
     outDir: 'dist'
+  },
+  server: {
+    watch: {
+      ignored: ['**/models/**']
+    }
   }
 })
