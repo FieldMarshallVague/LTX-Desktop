@@ -22,23 +22,34 @@ class LTXFastVideoPipeline:
         gemma_root: str | None,
         upsampler_path: str,
         device: torch.device,
+        distilled_lora_path: str | None = None,
     ) -> "LTXFastVideoPipeline":
         return LTXFastVideoPipeline(
             checkpoint_path=checkpoint_path,
             gemma_root=gemma_root,
             upsampler_path=upsampler_path,
             device=device,
+            distilled_lora_path=distilled_lora_path,
         )
 
-    def __init__(self, checkpoint_path: str, gemma_root: str | None, upsampler_path: str, device: torch.device) -> None:
+    def __init__(
+        self, 
+        checkpoint_path: str, 
+        gemma_root: str | None, 
+        upsampler_path: str, 
+        device: torch.device,
+        distilled_lora_path: str | None = None,
+    ) -> None:
         from ltx_core.quantization import QuantizationPolicy
         from ltx_pipelines.distilled import DistilledPipeline
+
+        loras = [distilled_lora_path] if distilled_lora_path else []
 
         self.pipeline = DistilledPipeline(
             distilled_checkpoint_path=checkpoint_path,
             gemma_root=cast(str, gemma_root),
             spatial_upsampler_path=upsampler_path,
-            loras=[],
+            loras=loras,
             device=device,
             quantization=QuantizationPolicy.fp8_cast() if device_supports_fp8(device) else None,
         )

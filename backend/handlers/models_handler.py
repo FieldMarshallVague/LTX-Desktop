@@ -11,8 +11,8 @@ from handlers.base import StateHandlerBase, with_state_lock
 from runtime_config.model_download_specs import MODEL_FILE_ORDER, resolve_model_path, resolve_required_model_types
 from state.app_state_types import AppState, AvailableFiles, ModelFileType
 
-if TYPE_CHECKING:
-    from runtime_config.runtime_config import RuntimeConfig
+from runtime_config.runtime_config import RuntimeConfig
+from runtime_config.gguf_catalog import GGUF_CATALOG, GgufModelId
 
 
 class ModelsHandler(StateHandlerBase):
@@ -46,6 +46,13 @@ class ModelsHandler(StateHandlerBase):
     def refresh_available_files(self) -> AvailableFiles:
         self.state.available_files = self._scan_available_files()
         return self.state.available_files.copy()
+        
+    def _scan_gguf_files(self) -> dict[GgufModelId, Path | None]:
+        available: dict[GgufModelId, Path | None] = {}
+        for gguf_id, spec in GGUF_CATALOG.items():
+            path = self.models_dir / spec["filename"]
+            available[gguf_id] = path if path.exists() else None
+        return available
 
     def get_text_encoder_status(self) -> TextEncoderStatus:
         files = self.refresh_available_files()
@@ -65,7 +72,8 @@ class ModelsHandler(StateHandlerBase):
     def get_models_list(self) -> list[ModelInfo]:
         pro_steps = self.state.app_settings.pro_model.steps
         pro_upscaler = self.state.app_settings.pro_model.use_upscaler
-        return [
+        
+        base_models = [
             ModelInfo(id="fast", name="Fast (Distilled)", description="8 steps + 2x upscaler"),
             ModelInfo(
                 id="pro",
@@ -73,6 +81,15 @@ class ModelsHandler(StateHandlerBase):
                 description=f"{pro_steps} steps" + (" + 2x upscaler" if pro_upscaler else " (native resolution)"),
             ),
         ]
+        # Determine available GGUF variants
+        gguf_files = self._scan_gguf_files()
+        for gguf_id, path in gguf_files.items():
+            if path is not None:
+                spec = GGUF_CATALOG[gguf_id]
+                if not spec["is_text_encoder"]:
+                    base_models.append(ModelInfo(id=f"gguf:{gguf_id}", name=spec["name"], description=spec["description"]))
+
+        return base_models
 
     @with_state_lock
     def get_required_model_types(self, skip_text_encoder: bool = False) -> list[ModelFileType]:
@@ -137,15 +154,41 @@ class ModelsHandler(StateHandlerBase):
 
         all_downloaded = all(model.downloaded for model in models if model.required)
 
+        # Scrape GGUF status
+        from api_types import GgufModelStatus
+        gguf_status_list: list[GgufModelStatus] = []
+        gguf_files = self._scan_gguf_files()
+        for gguf_id, path in gguf_files.items():
+            spec = GGUF_CATALOG[gguf_id]
+            actual_size = path.stat().st_size if path is not None else 0
+            exists = path is not None
+            gguf_status_list.append(
+                GgufModelStatus(
+                    id=gguf_id,
+                    name=spec["name"],
+                    description=spec["description"],
+                    downloaded=exists,
+                    size_bytes=actual_size if exists else spec["expected_size_bytes"],
+                    expected_size_bytes=spec["expected_size_bytes"],
+                    vram_required_gb=spec["vram_required_gb"],
+                    is_text_encoder=spec["is_text_encoder"],
+                    is_distilled=spec["is_distilled"],
+                )
+            )
+
+        total_gb = float(total_size) / (1024**3)
+        dl_gb = float(downloaded_size) / (1024**3)
+
         return ModelsStatusResponse(
             models=models,
             all_downloaded=all_downloaded,
             total_size=total_size,
             downloaded_size=downloaded_size,
-            total_size_gb=round(total_size / (1024**3), 1),
-            downloaded_size_gb=round(downloaded_size / (1024**3), 1),
+            total_size_gb=round(total_gb, 1),
+            downloaded_size_gb=round(dl_gb, 1),
             models_path=str(self.models_dir),
             has_api_key=has_api_key,
             text_encoder_status=self.get_text_encoder_status(),
             use_local_text_encoder=settings.use_local_text_encoder,
+            gguf_models=gguf_status_list,
         )

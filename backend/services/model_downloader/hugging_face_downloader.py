@@ -86,10 +86,11 @@ class HuggingFaceDownloader:
         filename: str,
         local_dir: str,
         on_progress: Callable[[int], None] | None = None,
+        token: str | None = None,
     ) -> Path:
         ctx = _patch_download_progress(on_progress) if on_progress is not None else contextlib.nullcontext()
         with ctx:
-            path: str = hf_hub_download(repo_id=repo_id, filename=filename, local_dir=local_dir)
+            path: str = hf_hub_download(repo_id=repo_id, filename=filename, local_dir=local_dir, token=token)
         return Path(path)
 
     def download_snapshot(
@@ -97,8 +98,9 @@ class HuggingFaceDownloader:
         repo_id: str,
         local_dir: str,
         on_progress: Callable[[int], None] | None = None,
+        token: str | None = None,
     ) -> Path:
         ctx = _patch_download_progress(on_progress) if on_progress is not None else contextlib.nullcontext()
         with ctx:
-            path: str = snapshot_download(repo_id=repo_id, local_dir=local_dir)
+            path: str = snapshot_download(repo_id=repo_id, local_dir=local_dir, token=token)
         return Path(path)

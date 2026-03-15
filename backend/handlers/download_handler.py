@@ -22,6 +22,7 @@ from runtime_config.model_download_specs import (
 )
 from services.interfaces import ModelDownloader, TaskRunner
 from state.app_state_types import AppState, DownloadingSession, FileDownloadRunning, ModelFileType
+from runtime_config.gguf_catalog import GGUF_CATALOG
 
 if TYPE_CHECKING:
     from runtime_config.runtime_config import RuntimeConfig
@@ -49,7 +50,7 @@ class DownloadHandler(StateHandlerBase):
         return self.state.downloading_session is not None
 
     @with_state_lock
-    def start_download(self, files_to_download: set[ModelFileType]) -> str:
+    def start_download(self, files_to_download: set[str]) -> str:
         session_id = uuid4().hex
         self.state.downloading_session = DownloadingSession(
             id=session_id,
@@ -61,7 +62,7 @@ class DownloadHandler(StateHandlerBase):
         return session_id
 
     @with_state_lock
-    def start_file(self, file_type: ModelFileType, target: str) -> None:
+    def start_file(self, file_type: str, target: str) -> None:
         session = self.state.downloading_session
         if session is None:
             return
@@ -87,7 +88,7 @@ class DownloadHandler(StateHandlerBase):
         self.state.downloading_session = None
 
     @with_state_lock
-    def update_file_progress(self, file_type: ModelFileType, downloaded: int, speed_bytes_per_sec: float) -> None:
+    def update_file_progress(self, file_type: str, downloaded: int, speed_bytes_per_sec: float) -> None:
         session = self.state.downloading_session
         if session is None:
             return
@@ -105,7 +106,7 @@ class DownloadHandler(StateHandlerBase):
             self.state.completed_download_sessions[session.id] = error
             self.state.downloading_session = None
 
-    def _make_progress_callback(self, file_type: ModelFileType) -> Callable[[int], None]:
+    def _make_progress_callback(self, file_type: str) -> Callable[[int], None]:
         last_sample_time = time.monotonic()
         last_sample_bytes = 0
         smoothed_speed = 0.0
@@ -139,15 +140,23 @@ class DownloadHandler(StateHandlerBase):
             current_downloaded = rf.downloaded_bytes if rf else 0
             total_downloaded = session.completed_bytes + current_downloaded
 
-            expected_total_bytes = sum(
-                self.config.spec_for(ft).expected_size_bytes for ft in session.files_to_download
-            )
+            expected_total_bytes = 0
+            for ft in session.files_to_download:
+                if ft in GGUF_CATALOG:
+                    expected_total_bytes += GGUF_CATALOG[ft]["expected_size_bytes"]
+                else:
+                    expected_total_bytes += self.config.spec_for(ft).expected_size_bytes
 
             current_file_progress = 0.0
             if rf is not None:
-                spec = self.config.spec_for(rf.file_type)
-                if spec.expected_size_bytes > 0:
-                    current_file_progress = min(99.0, rf.downloaded_bytes / spec.expected_size_bytes * 100)
+                if rf.file_type in GGUF_CATALOG:
+                    exp_size = GGUF_CATALOG[rf.file_type]["expected_size_bytes"]
+                else:
+                    spec = self.config.spec_for(rf.file_type)
+                    exp_size = spec.expected_size_bytes
+                
+                if exp_size > 0:
+                    current_file_progress = min(99.0, rf.downloaded_bytes / exp_size * 100)
 
             total_progress = 0.0
             if expected_total_bytes > 0:
@@ -197,11 +206,18 @@ class DownloadHandler(StateHandlerBase):
 
         raise ValueError(f"Unknown download session: {session_id}")
 
-    def _move_to_final(self, file_type: ModelFileType) -> None:
+    def _move_to_final(self, file_type: str) -> None:
         """Move downloaded file/folder from downloading dir to final location."""
-        spec = self.config.spec_for(file_type)
-        src = resolve_downloading_target_path(self.models_dir, self.config.model_download_specs, file_type)
-        dst = resolve_model_path(self.models_dir, self.config.model_download_specs, file_type)
+        if file_type in GGUF_CATALOG:
+            spec_gguf = GGUF_CATALOG[file_type]
+            src = resolve_downloading_dir(self.models_dir) / file_type / spec_gguf["filename"]
+            dst = self.models_dir / spec_gguf["filename"]
+            is_folder = False
+        else:
+            spec = self.config.spec_for(file_type)
+            src = resolve_downloading_target_path(self.models_dir, self.config.model_download_specs, file_type)
+            dst = resolve_model_path(self.models_dir, self.config.model_download_specs, file_type)
+            is_folder = spec.is_folder
 
         def _robust_rename() -> None:
             max_retries = 10
@@ -216,7 +232,7 @@ class DownloadHandler(StateHandlerBase):
                     else:
                         raise
 
-        if spec.is_folder:
+        if is_folder:
             if dst.exists():
                 shutil.rmtree(dst)
             _robust_rename()
@@ -225,6 +241,11 @@ class DownloadHandler(StateHandlerBase):
                 dst.unlink()
             dst.parent.mkdir(parents=True, exist_ok=True)
             _robust_rename()
+            if file_type in GGUF_CATALOG:
+                # Cleanup the temp downloading folder for this gguf explicitly
+                temp_dir = resolve_downloading_dir(self.models_dir) / file_type
+                if temp_dir.exists():
+                    shutil.rmtree(temp_dir, ignore_errors=True)
 
     def cleanup_downloading_dir(self) -> None:
         """Remove stale .downloading/ dir (leftover from crashed downloads)."""
@@ -232,48 +253,74 @@ class DownloadHandler(StateHandlerBase):
         if downloading.exists():
             shutil.rmtree(downloading)
 
-    def _discover_files_to_download(self, model_types: set[ModelFileType]) -> dict[ModelFileType, str]:
+    def _discover_files_to_download(self, model_types: set[ModelFileType], gguf_models: set[str]) -> dict[str, str]:
         """Determine which files need downloading (not already available)."""
         self._models_handler.refresh_available_files()
         available = self.state.available_files.copy()
+        
+        gguf_files = self._models_handler._scan_gguf_files()
 
-        files_to_download: dict[ModelFileType, str] = {}
+        files_to_download: dict[str, str] = {}
         for model_type in MODEL_FILE_ORDER:
             if model_type not in model_types:
                 continue
             if available[model_type] is not None:
                 continue
             spec = self.config.spec_for(model_type)
-            files_to_download[model_type] = spec.name
+            files_to_download[str(model_type)] = str(spec.name)
+            
+        for gguf_id in gguf_models:
+            if gguf_id not in GGUF_CATALOG:
+                continue
+            if gguf_files.get(gguf_id) is not None:
+                continue
+            spec = GGUF_CATALOG[gguf_id]
+            files_to_download[str(gguf_id)] = str(spec["filename"])
+            
         return files_to_download
 
-    def _download_models_worker(self, files_to_download: dict[ModelFileType, str]) -> None:
+    def _download_models_worker(self, files_to_download: dict[str, str]) -> None:
         if not files_to_download:
             self.finish_download()
             return
 
         for file_type, target_name in files_to_download.items():
-            spec = self.config.spec_for(file_type)
-            logger.info("Downloading %s from %s", target_name, spec.repo_id)
+            if file_type in GGUF_CATALOG:
+                gguf_spec = GGUF_CATALOG[file_type]
+                repo_id = gguf_spec["repo_id"]
+                is_folder = False
+                filename = gguf_spec["filename"]
+                local_dir = str(resolve_downloading_dir(self.models_dir) / file_type)
+            else:
+                spec = self.config.spec_for(file_type)
+                repo_id = spec.repo_id
+                is_folder = spec.is_folder
+                filename = spec.name
+                local_dir = str(resolve_downloading_path(self.models_dir, self.config.model_download_specs, file_type))
 
+            logger.info("Downloading %s from %s", target_name, repo_id)
+
+            hf_token = self.state.app_settings.hf_api_key or None
             self.start_file(file_type, target_name)
             progress_cb = self._make_progress_callback(file_type)
 
             try:
                 resolve_downloading_dir(self.models_dir).mkdir(parents=True, exist_ok=True)
 
-                if spec.is_folder:
+                if is_folder:
                     self._model_downloader.download_snapshot(
-                        repo_id=spec.repo_id,
-                        local_dir=str(resolve_downloading_path(self.models_dir, self.config.model_download_specs, file_type)),
+                        repo_id=repo_id,
+                        local_dir=local_dir,
                         on_progress=progress_cb,
+                        token=hf_token,
                     )
                 else:
                     self._model_downloader.download_file(
-                        repo_id=spec.repo_id,
-                        filename=spec.name,
-                        local_dir=str(resolve_downloading_path(self.models_dir, self.config.model_download_specs, file_type)),
+                        repo_id=repo_id,
+                        filename=filename,
+                        local_dir=local_dir,
                         on_progress=progress_cb,
+                        token=hf_token,
                     )
 
                 self._move_to_final(file_type)
@@ -284,12 +331,15 @@ class DownloadHandler(StateHandlerBase):
         self.finish_download()
         self._models_handler.refresh_available_files()
 
-    def start_model_download(self, model_types: set[ModelFileType]) -> str | None:
+    def start_model_download(self, model_types: set[ModelFileType], gguf_models: set[str] | None = None) -> str | None:
+        if gguf_models is None:
+            gguf_models = set()
+            
         with self._lock:
             if self.state.downloading_session is not None:
                 return None
 
-        files_to_download = self._discover_files_to_download(model_types)
+        files_to_download = self._discover_files_to_download(model_types, gguf_models)
         session_id = self.start_download(set(files_to_download.keys()))
 
         self._task_runner.run_background(

@@ -17,6 +17,7 @@ export interface AppSettings {
   userPrefersLtxApiVideoGenerations: boolean
   hasFalApiKey: boolean
   hasGeminiApiKey: boolean
+  hasHfApiKey: boolean
   useLocalTextEncoder: boolean
   fastModel: FastModelSettings
   proModel: InferenceSettings
@@ -35,6 +36,7 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
   userPrefersLtxApiVideoGenerations: false,
   hasFalApiKey: false,
   hasGeminiApiKey: false,
+  hasHfApiKey: false,
   useLocalTextEncoder: false,
   fastModel: { useUpscaler: true },
   proModel: { steps: 20, useUpscaler: true },
@@ -57,6 +59,7 @@ interface AppSettingsContextValue {
   saveLtxApiKey: (value: string) => Promise<void>
   saveFalApiKey: (value: string) => Promise<void>
   saveGeminiApiKey: (value: string) => Promise<void>
+  saveHfApiKey: (value: string) => Promise<void>
   forceApiGenerations: boolean
   shouldVideoGenerateWithLtxApi: boolean
 }
@@ -83,6 +86,7 @@ function normalizeAppSettings(data: Partial<AppSettings>): AppSettings {
     userPrefersLtxApiVideoGenerations: data.userPrefersLtxApiVideoGenerations ?? DEFAULT_APP_SETTINGS.userPrefersLtxApiVideoGenerations,
     hasFalApiKey: data.hasFalApiKey ?? DEFAULT_APP_SETTINGS.hasFalApiKey,
     hasGeminiApiKey: data.hasGeminiApiKey ?? DEFAULT_APP_SETTINGS.hasGeminiApiKey,
+    hasHfApiKey: data.hasHfApiKey ?? DEFAULT_APP_SETTINGS.hasHfApiKey,
     useLocalTextEncoder: data.useLocalTextEncoder ?? DEFAULT_APP_SETTINGS.useLocalTextEncoder,
     fastModel: data.fastModel ?? DEFAULT_APP_SETTINGS.fastModel,
     proModel: data.proModel ?? DEFAULT_APP_SETTINGS.proModel,
@@ -213,7 +217,7 @@ export function AppSettingsProvider({ children }: { children: ReactNode }) {
     if (!isLoaded || backendProcessStatus !== 'alive') return
     const syncTimer = setTimeout(async () => {
       try {
-        const { hasLtxApiKey: _a, hasFalApiKey: _b, hasGeminiApiKey: _c, modelsDir: _d, ...syncPayload } = settings
+        const { hasLtxApiKey: _a, hasFalApiKey: _b, hasGeminiApiKey: _c, hasHfApiKey: _e, modelsDir: _d, ...syncPayload } = settings
         await backendFetch('/api/settings', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -260,6 +264,19 @@ export function AppSettingsProvider({ children }: { children: ReactNode }) {
     await refreshSettings()
   }, [refreshSettings])
 
+  const saveHfApiKey = useCallback(async (value: string) => {
+    const response = await backendFetch('/api/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ hfApiKey: value }),
+    })
+    if (!response.ok) {
+      const detail = await response.text()
+      throw new Error(detail || 'Failed to save Hugging Face API key.')
+    }
+    await refreshSettings()
+  }, [refreshSettings])
+
   const saveFalApiKey = useCallback(async (value: string) => {
     const response = await backendFetch('/api/settings', {
       method: 'POST',
@@ -286,10 +303,11 @@ export function AppSettingsProvider({ children }: { children: ReactNode }) {
       saveLtxApiKey,
       saveFalApiKey,
       saveGeminiApiKey,
+      saveHfApiKey,
       forceApiGenerations,
       shouldVideoGenerateWithLtxApi,
     }),
-    [forceApiGenerations, isLoaded, refreshSettings, runtimePolicyLoaded, saveFalApiKey, saveGeminiApiKey, saveLtxApiKey, settings, shouldVideoGenerateWithLtxApi, updateSettings],
+    [forceApiGenerations, isLoaded, refreshSettings, runtimePolicyLoaded, saveFalApiKey, saveGeminiApiKey, saveLtxApiKey, saveHfApiKey, settings, shouldVideoGenerateWithLtxApi, updateSettings],
   )
 
   return <AppSettingsContext.Provider value={contextValue}>{children}</AppSettingsContext.Provider>

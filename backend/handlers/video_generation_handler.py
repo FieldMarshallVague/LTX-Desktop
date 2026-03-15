@@ -91,7 +91,7 @@ class VideoGenerationHandler(StateHandlerBase):
         if audio_path:
             return self._generate_a2v(req, duration, fps, audio_path=audio_path)
 
-        logger.info("Resolution %s - using fast pipeline", resolution)
+        logger.info("Resolution %s - using pipeline: %s", resolution, req.model)
 
         RESOLUTION_MAP_16_9: dict[str, tuple[int, int]] = {
             "540p": (960, 544),
@@ -124,10 +124,11 @@ class VideoGenerationHandler(StateHandlerBase):
         seed = self._resolve_seed()
 
         try:
-            self._pipelines.load_gpu_pipeline("fast", should_warm=False)
+            self._pipelines.load_gpu_pipeline(req.model, should_warm=False)
             self._generation.start_generation(generation_id)
 
             output_path = self.generate_video(
+                model=req.model,
                 prompt=req.prompt,
                 image=image,
                 height=height,
@@ -152,6 +153,7 @@ class VideoGenerationHandler(StateHandlerBase):
 
     def generate_video(
         self,
+        model: str,
         prompt: str,
         image: Image.Image | None,
         height: int,
@@ -164,7 +166,7 @@ class VideoGenerationHandler(StateHandlerBase):
     ) -> str:
         t_total_start = time.perf_counter()
         gen_mode = "i2v" if image is not None else "t2v"
-        logger.info("[%s] Generation started (model=fast, %dx%d, %d frames, %d fps)", gen_mode, width, height, num_frames, int(fps))
+        logger.info("[%s] Generation started (model=%s, %dx%d, %d frames, %d fps)", gen_mode, model, width, height, num_frames, int(fps))
 
         if self._generation.is_generation_cancelled():
             raise RuntimeError("Generation was cancelled")
@@ -176,7 +178,7 @@ class VideoGenerationHandler(StateHandlerBase):
 
         self._generation.update_progress("loading_model", 5, 0, total_steps)
         t_load_start = time.perf_counter()
-        pipeline_state = self._pipelines.load_gpu_pipeline("fast", should_warm=False)
+        pipeline_state = self._pipelines.load_gpu_pipeline(model, should_warm=False)
         t_load_end = time.perf_counter()
         logger.info("[%s] Pipeline load: %.2fs", gen_mode, t_load_end - t_load_start)
 

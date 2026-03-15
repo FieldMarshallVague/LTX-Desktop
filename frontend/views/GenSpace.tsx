@@ -26,6 +26,7 @@ import { logger } from '../lib/logger'
 import { RetakePanel } from '../components/RetakePanel'
 import { ICLoraPanel, CONDITIONING_TYPES } from '../components/ICLoraPanel'
 import { FreeApiKeyBubble } from '../components/FreeApiKeyBubble'
+import { backendFetch } from '../lib/backend'
 
 // Asset card with hover overlays
 function AssetCard({
@@ -340,6 +341,7 @@ function PromptBar({
   onIcLoraCondTypeChange,
   icLoraStrength,
   onIcLoraStrengthChange,
+  ggufVideoModels,
 }: {
   mode: 'image' | 'video' | 'retake' | 'ic-lora'
   onModeChange: (mode: 'image' | 'video' | 'retake' | 'ic-lora') => void
@@ -371,6 +373,7 @@ function PromptBar({
   onIcLoraCondTypeChange?: (type: ICLoraConditioningType) => void
   icLoraStrength?: number
   onIcLoraStrengthChange?: (strength: number) => void
+  ggufVideoModels?: {value: string, label: string}[]
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const audioInputRef = useRef<HTMLInputElement>(null)
@@ -677,15 +680,16 @@ function PromptBar({
                     ]
                   : [
                       { value: 'fast', label: 'LTX 2.3 Fast' },
+                      ...(ggufVideoModels || [])
                     ]
               }
               trigger={
                 <>
-                  <LightricksIcon className="h-3.5 w-3.5" />
-                  <span className="text-zinc-300 font-medium">
+                  <LightricksIcon className="h-3.5 w-3.5 flex-shrink-0" />
+                  <span className="text-zinc-300 font-medium whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">
                     {shouldVideoGenerateWithLtxApi
                       ? (settings.model === 'pro' ? 'LTX-2.3 Pro (API)' : 'LTX-2.3 Fast (API)')
-                      : 'LTX 2.3 Fast'}
+                      : (settings.model === 'fast' ? 'LTX 2.3 Fast' : (ggufVideoModels?.find((m: any) => m.value === settings.model)?.label || settings.model))}
                   </span>
                 </>
               }
@@ -962,6 +966,31 @@ export function GenSpace() {
     videoUrl: string | null
     videoPath: string | null
   }>({ videoUrl: null, videoPath: null })
+
+  const [ggufVideoModels, setGgufVideoModels] = useState<{value: string, label: string}[]>([])
+
+  useEffect(() => {
+    const fetchModels = async () => {
+      try {
+        const res = await backendFetch('/api/models/status')
+        if (res.ok) {
+          const data = await res.json()
+          const available = (data.gguf_models || [])
+            .filter((m: any) => m.downloaded && !m.is_text_encoder)
+            .map((m: any) => ({
+              value: m.id,
+              label: m.is_distilled ? `${m.name} (Distilled)` : m.name
+            }))
+          setGgufVideoModels(available)
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+    fetchModels()
+    const interval = setInterval(fetchModels, 5000)
+    return () => clearInterval(interval)
+  }, [])
 
   const {
     submitIcLora,
@@ -1667,6 +1696,7 @@ export function GenSpace() {
           onIcLoraCondTypeChange={setIcLoraCondType}
           icLoraStrength={icLoraStrength}
           onIcLoraStrengthChange={setIcLoraStrength}
+          ggufVideoModels={ggufVideoModels}
         />
       </div>
       

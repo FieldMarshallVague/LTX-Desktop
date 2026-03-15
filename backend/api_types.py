@@ -133,6 +133,18 @@ class TextEncoderStatus(BaseModel):
     expected_size_gb: float
 
 
+class GgufModelStatus(BaseModel):
+    id: str
+    name: str
+    description: str
+    downloaded: bool
+    size_bytes: int
+    expected_size_bytes: int
+    vram_required_gb: float
+    is_text_encoder: bool
+    is_distilled: bool
+
+
 class ModelsStatusResponse(BaseModel):
     models: list[ModelFileStatus]
     all_downloaded: bool
@@ -144,6 +156,7 @@ class ModelsStatusResponse(BaseModel):
     has_api_key: bool
     text_encoder_status: TextEncoderStatus
     use_local_text_encoder: bool
+    gguf_models: list[GgufModelStatus] = Field(default_factory=list)
 
 
 class DownloadProgressResponse(BaseModel):
@@ -248,9 +261,12 @@ class GenerateImageRequest(BaseModel):
 def _default_model_types() -> set[ModelFileType]:
     return set()
 
+def _default_gguf_models() -> set[str]:
+    return set()
 
 class ModelDownloadRequest(BaseModel):
     modelTypes: set[ModelFileType] = Field(default_factory=_default_model_types)
+    ggufModels: set[str] = Field(default_factory=_default_gguf_models)
 
 
 class RequiredModelsResponse(BaseModel):

@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 from handlers.base import StateHandlerBase
 from handlers.text_handler import TextHandler
 from runtime_config.model_download_specs import resolve_model_path
+from runtime_config.gguf_catalog import GGUF_CATALOG
 from services.interfaces import (
     A2VPipeline,
     DepthProcessorPipeline,
@@ -119,7 +120,17 @@ class PipelinesHandler(StateHandlerBase):
     def _create_video_pipeline(self, model_type: VideoPipelineModelType) -> VideoPipelineState:
         gemma_root = self._text_handler.resolve_gemma_root()
 
-        checkpoint_path = str(resolve_model_path(self.models_dir, self.config.model_download_specs,"checkpoint"))
+        distilled_lora_path = None
+        if model_type == "fast":
+            checkpoint_path = str(resolve_model_path(self.models_dir, self.config.model_download_specs,"checkpoint"))
+        elif model_type in GGUF_CATALOG:
+            gguf_spec = GGUF_CATALOG[model_type]
+            checkpoint_path = str(self.models_dir / gguf_spec["filename"])
+            if not gguf_spec["is_distilled"]:
+                distilled_lora_path = str(resolve_model_path(self.models_dir, self.config.model_download_specs,"distilled_lora"))
+        else:
+            raise ValueError(f"Unknown model_type: {model_type}")
+
         upsampler_path = str(resolve_model_path(self.models_dir, self.config.model_download_specs,"upsampler"))
 
         pipeline = self._fast_video_pipeline_class.create(
@@ -127,6 +138,7 @@ class PipelinesHandler(StateHandlerBase):
             gemma_root,
             upsampler_path,
             self.config.device,
+            distilled_lora_path,
         )
 
         state = VideoPipelineState(

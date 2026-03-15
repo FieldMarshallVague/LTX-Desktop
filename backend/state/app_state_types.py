@@ -40,7 +40,7 @@ AvailableFiles = dict[ModelFileType, Path | None]
 
 @dataclass
 class FileDownloadRunning:
-    file_type: ModelFileType
+    file_type: str
     target_path: str
     downloaded_bytes: int
     speed_bytes_per_sec: float
@@ -50,8 +50,8 @@ class FileDownloadRunning:
 class DownloadingSession:
     id: str
     current_running_file: FileDownloadRunning | None
-    files_to_download: set[ModelFileType]
-    completed_files: set[ModelFileType]
+    files_to_download: set[str]
+    completed_files: set[str]
     completed_bytes: int
 
 

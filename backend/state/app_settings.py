@@ -72,6 +72,7 @@ class AppSettings(SettingsBaseModel):
     prompt_enhancer_enabled_t2v: bool = True
     prompt_enhancer_enabled_i2v: bool = False
     gemini_api_key: str = ""
+    hf_api_key: str = ""
     seed_locked: bool = False
     locked_seed: int = 42
     models_dir: str = ""
@@ -144,6 +145,7 @@ class SettingsResponse(SettingsBaseModel):
     prompt_enhancer_enabled_t2v: bool = True
     prompt_enhancer_enabled_i2v: bool = False
     has_gemini_api_key: bool = False
+    has_hf_api_key: bool = False
     seed_locked: bool = False
     locked_seed: int = 42
     models_dir: str = ""
@@ -154,9 +156,11 @@ def to_settings_response(settings: AppSettings) -> SettingsResponse:
     ltx_key = data.pop("ltx_api_key", "")
     fal_key = data.pop("fal_api_key", "")
     gemini_key = data.pop("gemini_api_key", "")
+    hf_key = data.pop("hf_api_key", "")
     data["has_ltx_api_key"] = bool(ltx_key)
     data["has_fal_api_key"] = bool(fal_key)
     data["has_gemini_api_key"] = bool(gemini_key)
+    data["has_hf_api_key"] = bool(hf_key)
     # models_dir passes through as-is (not secret)
     return SettingsResponse.model_validate(data)
 
