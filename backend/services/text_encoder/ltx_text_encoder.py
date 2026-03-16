@@ -188,7 +188,6 @@ class LTXTextEncoder:
                 "ltx_pipelines.ic_lora",
                 "ltx_pipelines.a2vid_two_stage",
                 "ltx_pipelines.retake",
-                "ltx_pipelines.retake_pipeline",
             ):
                 try:
                     module = __import__(module_name, fromlist=["cleanup_memory"])
@@ -249,7 +248,6 @@ class LTXTextEncoder:
                 "ltx_pipelines.ic_lora",
                 "ltx_pipelines.a2vid_two_stage",
                 "ltx_pipelines.retake",
-                "ltx_pipelines.retake_pipeline",
             ):
                 try:
                     module = __import__(module_name, fromlist=["encode_text"])

@@ -165,4 +165,4 @@ def swap_linear_with_gguf(module: torch.nn.Module) -> torch.nn.Module:
     )
     return new_module
 
-gguf_module_ops = ModuleOps(matcher=is_linear, mutator=swap_linear_with_gguf)
+gguf_module_ops = ModuleOps(name="gguf_linear", matcher=is_linear, mutator=swap_linear_with_gguf)

@@ -119,6 +119,11 @@ export function SettingsPanel({
             disabled={disabled}
           >
             <option value="fast">LTX 2.3 Fast</option>
+            {ggufModels.filter(m => !m.is_text_encoder).map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.name}
+              </option>
+            ))}
           </Select>
           
           <Select
