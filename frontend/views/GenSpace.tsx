@@ -26,6 +26,7 @@ import { logger } from '../lib/logger'
 import { RetakePanel } from '../components/RetakePanel'
 import { ICLoraPanel, CONDITIONING_TYPES } from '../components/ICLoraPanel'
 import { FreeApiKeyBubble } from '../components/FreeApiKeyBubble'
+import { SettingsPanel, type GenerationSettings } from '../components/SettingsPanel'
 import { backendFetch } from '../lib/backend'
 
 // Asset card with hover overlays
@@ -291,7 +292,8 @@ function SettingsDropdown({
 }
 
 // Lightricks brand icon
-function LightricksIcon({ className }: { className?: string }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function LightricksIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fillRule="evenodd" clipRule="evenodd" d="M17.0073 8.18934C16.3266 5.6556 14.9346 2.06903 12.3065 2.06903C9.27204 2.06903 6.86627 7.24621 5.45487 11.7948C4.79654 13.9203 4.35877 15.9049 4.17755 17.1736C4.10214 17.5829 4.06274 18.0044 4.06274 18.4347C4.06274 22.2903 7.22553 25.4338 11.1133 25.4338C15.5206 25.4338 23.9376 22.7073 23.9376 18.4347C23.9376 17.1179 23.1376 15.948 21.9018 14.9595L21.9039 14.9575C22.4493 13.7707 22.847 12.648 23.001 11.705C23.1934 10.5053 23.0074 9.5494 22.4429 8.88217C21.7692 8.07382 20.7107 7.85572 19.6586 7.84288C18.8826 7.84288 17.9777 7.96904 17.0073 8.18934ZM8.00176 9.17083C7.6945 9.93266 7.02317 11.7419 6.70157 12.9799C7.93005 11.9987 9.2965 11.1653 10.7091 10.4796C12.2325 9.73758 13.9171 9.06448 15.518 8.58411C15.08 6.98293 13.9585 3.62158 12.3129 3.62158C11.0298 3.62158 9.41958 5.69374 8.00176 9.17083ZM20.6201 14.083L20.6209 14.0786C21.0507 13.1163 21.3522 12.2118 21.4741 11.4547C21.5511 10.9607 21.5832 10.2872 21.2752 9.89577C20.9416 9.46599 20.1975 9.39543 19.6521 9.38901C18.9932 9.38901 18.2117 9.49943 17.3641 9.69208L17.3683 9.69702C17.586 10.7217 17.7526 11.772 17.8808 12.7968C18.8527 13.16 19.7877 13.5908 20.6201 14.083ZM15.8828 10.0897C14.6739 10.4588 13.4041 10.9464 12.209 11.4846C13.4346 11.588 14.8471 11.8527 16.2581 12.2608C16.1554 11.5367 16.0273 10.8061 15.8799 10.0948L15.8828 10.0897ZM11.1133 12.9816C8.07878 12.9816 5.60884 15.4258 5.60884 18.4347C5.60884 21.4435 8.07878 23.8878 11.1133 23.8878C13.8701 23.8878 16.3653 21.6639 16.6048 18.9158C16.7011 17.7546 16.669 15.9263 16.4637 13.9311C14.6294 13.3385 12.6763 12.9816 11.1133 12.9816ZM18.3883 22.2069C17.7984 22.4697 17.1711 22.7085 16.5284 22.9184C18.0872 21.3274 19.8832 18.8193 21.1982 16.3689L21.1997 16.3654C21.9756 17.0509 22.3915 17.7593 22.3915 18.4347C22.3915 19.6985 20.9288 21.0778 18.3883 22.2069ZM19.9493 15.4655L19.9473 15.4707C19.4291 16.4567 18.8221 17.4625 18.1833 18.4092C18.2214 17.4089 18.1892 16.0386 18.0611 14.5212C18.71 14.7948 19.3456 15.1021 19.9493 15.4655Z" fill="currentColor" />
@@ -341,7 +343,7 @@ function PromptBar({
   onIcLoraCondTypeChange,
   icLoraStrength,
   onIcLoraStrengthChange,
-  ggufVideoModels,
+  ggufModels,
 }: {
   mode: 'image' | 'video' | 'retake' | 'ic-lora'
   onModeChange: (mode: 'image' | 'video' | 'retake' | 'ic-lora') => void
@@ -373,7 +375,7 @@ function PromptBar({
   onIcLoraCondTypeChange?: (type: ICLoraConditioningType) => void
   icLoraStrength?: number
   onIcLoraStrengthChange?: (strength: number) => void
-  ggufVideoModels?: {value: string, label: string}[]
+  ggufModels?: { id: string, name: string, is_text_encoder: boolean }[]
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
   const audioInputRef = useRef<HTMLInputElement>(null)
@@ -668,34 +670,14 @@ function PromptBar({
           </>
         ) : (
           <>
-            <SettingsDropdown
-              title="MODEL"
-              value={settings.model}
-              onChange={(v) => onSettingsChange({ ...settings, model: v })}
-              options={
-                shouldVideoGenerateWithLtxApi
-                  ? [
-                      { value: 'fast', label: 'LTX-2.3 Fast (API)', disabled: !!inputAudio, tooltip: inputAudio ? 'Fast model is not available for Audio-to-Video' : undefined },
-                      { value: 'pro', label: 'LTX-2.3 Pro (API)' },
-                    ]
-                  : [
-                      { value: 'fast', label: 'LTX 2.3 Fast' },
-                      ...(ggufVideoModels || [])
-                    ]
-              }
-              trigger={
-                <>
-                  <LightricksIcon className="h-3.5 w-3.5 flex-shrink-0" />
-                  <span className="text-zinc-300 font-medium whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]">
-                    {shouldVideoGenerateWithLtxApi
-                      ? (settings.model === 'pro' ? 'LTX-2.3 Pro (API)' : 'LTX-2.3 Fast (API)')
-                      : (settings.model === 'fast' ? 'LTX 2.3 Fast' : (ggufVideoModels?.find((m: any) => m.value === settings.model)?.label || settings.model))}
-                  </span>
-                </>
-              }
+            <SettingsPanel
+              settings={settings as GenerationSettings}
+              onSettingsChange={onSettingsChange}
+              mode="text-to-video"
+              forceApiGenerations={shouldVideoGenerateWithLtxApi}
+              hasAudio={!!inputAudio}
+              ggufModels={ggufModels}
             />
-
-            <div className="w-px h-4 bg-zinc-700 mx-0.5" />
             
             {/* Duration dropdown */}
             <SettingsDropdown
@@ -967,7 +949,7 @@ export function GenSpace() {
     videoPath: string | null
   }>({ videoUrl: null, videoPath: null })
 
-  const [ggufVideoModels, setGgufVideoModels] = useState<{value: string, label: string}[]>([])
+  const [ggufModels, setGgufModels] = useState<{ id: string, name: string, is_text_encoder: boolean }[]>([])
 
   useEffect(() => {
     const fetchModels = async () => {
@@ -976,12 +958,13 @@ export function GenSpace() {
         if (res.ok) {
           const data = await res.json()
           const available = (data.gguf_models || [])
-            .filter((m: any) => m.downloaded && !m.is_text_encoder)
+            .filter((m: any) => m.downloaded)
             .map((m: any) => ({
-              value: m.id,
-              label: m.is_distilled ? `${m.name} (Distilled)` : m.name
+              id: m.id,
+              name: m.is_distilled && !m.is_text_encoder ? `${m.name} (Distilled)` : m.name,
+              is_text_encoder: m.is_text_encoder
             }))
-          setGgufVideoModels(available)
+          setGgufModels(available)
         }
       } catch (e) {
         // ignore
@@ -1696,7 +1679,7 @@ export function GenSpace() {
           onIcLoraCondTypeChange={setIcLoraCondType}
           icLoraStrength={icLoraStrength}
           onIcLoraStrengthChange={setIcLoraStrength}
-          ggufVideoModels={ggufVideoModels}
+          ggufModels={ggufModels}
         />
       </div>
       

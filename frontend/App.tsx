@@ -217,7 +217,9 @@ function AppContent() {
 
     const checkRequiredModels = async () => {
       try {
+        logger.info('App: Checking required models status to determine launch gate...')
         const allDownloaded = await areRequiredModelsDownloaded()
+        logger.info(`App: Models downloaded check result: ${allDownloaded}`)
         if (cancelled) return
         setRequiredModelsGate(allDownloaded ? 'ready' : 'missing')
       } catch (e) {

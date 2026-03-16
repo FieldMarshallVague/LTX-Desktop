@@ -72,6 +72,7 @@ class RetakeHandler(StateHandlerBase):
             duration=duration,
             prompt=prompt,
             mode=mode,
+            text_encoder_id=req.text_encoder_id,
         )
 
     def _run_api_retake(
@@ -118,6 +119,7 @@ class RetakeHandler(StateHandlerBase):
         duration: float,
         prompt: str,
         mode: str,
+        text_encoder_id: str | None = None,
     ) -> RetakeResponse:
         if self._generation.is_generation_running():
             raise HTTPError(409, "Generation already in progress")
@@ -129,7 +131,7 @@ class RetakeHandler(StateHandlerBase):
         self._validate_video_metadata(str(video_file))
 
         try:
-            self._text.prepare_text_encoding(prompt, enhance_prompt=False)
+            self._text.prepare_text_encoding(prompt, enhance_prompt=False, text_encoder_id=text_encoder_id)
         except RuntimeError as exc:
             raise HTTPError(400, str(exc)) from exc
 

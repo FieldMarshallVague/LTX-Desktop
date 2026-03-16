@@ -25,9 +25,12 @@ from _routes.runtime_policy import router as runtime_policy_router
 from _routes.settings import router as settings_router
 from logging_policy import log_http_error, log_unhandled_exception
 from state import init_state_service
+import logging
 
 if TYPE_CHECKING:
     from app_handler import AppHandler
+
+logger = logging.getLogger(__name__)
 
 DEFAULT_ALLOWED_ORIGINS: list[str] = [
     "http://localhost:5173",
@@ -103,10 +106,12 @@ def create_app(
         log_unhandled_exception(request, exc)
         return JSONResponse(status_code=500, content={"error": str(exc) or _FALLBACK})
 
+    logger.debug("Registering exception handlers in FastAPI app")
     app.add_exception_handler(RequestValidationError, _validation_error_handler)
     app.add_exception_handler(HTTPError, _route_http_error_handler)
     app.add_exception_handler(Exception, _route_generic_error_handler)
 
+    logger.debug("Including routers in FastAPI app")
     app.include_router(health_router)
     app.include_router(generation_router)
     app.include_router(models_router)
@@ -117,4 +122,5 @@ def create_app(
     app.include_router(ic_lora_router)
     app.include_router(runtime_policy_router)
 
+    logger.debug("FastAPI app creation complete")
     return app

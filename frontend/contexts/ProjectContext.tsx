@@ -153,13 +153,19 @@ function recoverAssetUrls(project: Project): Project {
 // Load initial projects from localStorage synchronously
 function loadProjectsFromStorage(): Project[] {
   try {
+    logger.info('ProjectContext: Starting to load projects from storage...')
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
       const parsed = JSON.parse(stored)
+      logger.info(`ProjectContext: Found ${Array.isArray(parsed) ? parsed.length : 0} raw projects in storage`)
       if (Array.isArray(parsed)) {
         // Migrate any old projects, then recover broken blob URLs
-        return parsed.map(migrateProject).map(recoverAssetUrls)
+        const migrated = parsed.map(migrateProject).map(recoverAssetUrls)
+        logger.info(`ProjectContext: Successfully loaded and migrated ${migrated.length} projects`)
+        return migrated
       }
+    } else {
+      logger.info('ProjectContext: No projects found in storage (empty)')
     }
   } catch (e) {
     logger.error(`Failed to load projects: ${e}`)
@@ -480,6 +486,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
   }, [projects])
   
   const openProject = useCallback((id: string) => {
+    logger.info(`ProjectContext: Opening project ${id}`)
     setCurrentProjectId(id)
     setCurrentView('project')
     setCurrentTab('gen-space')

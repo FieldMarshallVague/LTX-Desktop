@@ -147,7 +147,7 @@ class IcLoraHandler(StateHandlerBase):
             use_api = not self._text.should_use_local_encoding()
             encoding_method = "api" if use_api else "local"
             t_text_start = time.perf_counter()
-            self._text.prepare_text_encoding(req.prompt, enhance_prompt=use_api and s.prompt_enhancer_enabled_t2v)
+            self._text.prepare_text_encoding(req.prompt, enhance_prompt=use_api and s.prompt_enhancer_enabled_t2v, text_encoder_id=req.text_encoder_id)
             t_text_end = time.perf_counter()
             logger.info("[ic-lora] Text encoding (%s): %.2fs", encoding_method, t_text_end - t_text_start)
 

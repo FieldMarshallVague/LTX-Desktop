@@ -248,6 +248,7 @@ class GenerateVideoRequest(BaseModel):
     imagePath: str | None = None
     audioPath: str | None = None
     aspectRatio: Literal["16:9", "9:16"] = "16:9"
+    text_encoder_id: str | None = None
 
 
 class GenerateImageRequest(BaseModel):
@@ -289,6 +290,7 @@ class RetakeRequest(BaseModel):
     duration: float
     prompt: str = ""
     mode: str = "replace_audio_and_video"
+    text_encoder_id: str | None = None
 
 
 class IcLoraExtractRequest(BaseModel):
@@ -316,3 +318,4 @@ class IcLoraGenerateRequest(BaseModel):
     cfg_guidance_scale: float = 1.0
     negative_prompt: str = ""
     images: list[IcLoraImageInput] = Field(default_factory=_default_ic_lora_images)
+    text_encoder_id: str | None = None

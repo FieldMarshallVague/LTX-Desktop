@@ -15,11 +15,11 @@ export interface GenerationSettings {
   audio: boolean
   cameraMotion: string
   aspectRatio?: string
-  // Image-specific settings
   imageResolution: string
   imageAspectRatio: string
   imageSteps: number
   variations?: number  // Number of image variations to generate
+  textEncoderId?: string
 }
 
 interface SettingsPanelProps {
@@ -29,6 +29,7 @@ interface SettingsPanelProps {
   mode?: GenerationMode
   forceApiGenerations?: boolean
   hasAudio?: boolean
+  ggufModels?: { id: string, name: string, is_text_encoder: boolean }[] // Added for GGUF model selection
 }
 
 export function SettingsPanel({
@@ -38,6 +39,7 @@ export function SettingsPanel({
   mode = 'text-to-video',
   forceApiGenerations = false,
   hasAudio = false,
+  ggufModels = [],
 }: SettingsPanelProps) {
   const isImageMode = mode === 'text-to-image'
   const LOCAL_MAX_DURATION: Record<string, number> = { '540p': 20, '720p': 10, '1080p': 5 }
@@ -109,14 +111,30 @@ export function SettingsPanel({
     <div className="space-y-4">
       {/* Model Selection */}
       {!forceApiGenerations ? (
-        <Select
-          label="Model"
-          value={settings.model}
-          onChange={(e) => handleChange('model', e.target.value)}
-          disabled={disabled}
-        >
-          <option value="fast">LTX 2.3 Fast</option>
-        </Select>
+        <div className="grid grid-cols-2 gap-3">
+          <Select
+            label="Model"
+            value={settings.model}
+            onChange={(e) => handleChange('model', e.target.value)}
+            disabled={disabled}
+          >
+            <option value="fast">LTX 2.3 Fast</option>
+          </Select>
+          
+          <Select
+            label="Text Encoder"
+            value={settings.textEncoderId || ''}
+            onChange={(e) => handleChange('textEncoderId', e.target.value)}
+            disabled={disabled || ggufModels.filter(m => m.is_text_encoder).length === 0}
+          >
+            <option value="">Default (Safetensors)</option>
+            {ggufModels.filter(m => m.is_text_encoder).map((m) => (
+              <option key={m.id} value={m.id}>
+                {m.name}
+              </option>
+            ))}
+          </Select>
+        </div>
       ) : (
         <Select
           label="Model"

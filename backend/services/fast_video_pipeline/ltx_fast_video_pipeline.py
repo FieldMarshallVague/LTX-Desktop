@@ -7,10 +7,13 @@ import os
 from typing import Final, cast
 
 import torch
+import logging
 
 from api_types import ImageConditioningInput
 from services.ltx_pipeline_common import default_tiling_config, encode_video_output, video_chunks_number
 from services.services_utils import AudioOrNone, TilingConfigType, device_supports_fp8
+
+logger = logging.getLogger(__name__)
 
 
 class LTXFastVideoPipeline:
@@ -45,14 +48,30 @@ class LTXFastVideoPipeline:
 
         loras = [distilled_lora_path] if distilled_lora_path else []
 
+        is_gguf = checkpoint_path.endswith('.gguf')
+        quant_policy = QuantizationPolicy.fp8_cast() if device_supports_fp8(device) and not is_gguf else None
+
+        logger.debug("Initializing DistilledPipeline: checkpoint=%s, gemma=%s, upsampler=%s, is_gguf=%s", 
+                     checkpoint_path, gemma_root, upsampler_path, is_gguf)
         self.pipeline = DistilledPipeline(
             distilled_checkpoint_path=checkpoint_path,
             gemma_root=cast(str, gemma_root),
             spatial_upsampler_path=upsampler_path,
             loras=loras,
             device=device,
-            quantization=QuantizationPolicy.fp8_cast() if device_supports_fp8(device) else None,
+            quantization=quant_policy,
         )
+        logger.debug("DistilledPipeline initialized successfully")
+
+        if is_gguf:
+            from dataclasses import replace
+            from services.fast_video_pipeline.gguf_utils import GgufModelStateDictLoader, gguf_module_ops
+            tb = self.pipeline.model_ledger.transformer_builder
+            self.pipeline.model_ledger.transformer_builder = replace(
+                tb,
+                model_loader=GgufModelStateDictLoader(),
+                module_ops=(*tb.module_ops, gguf_module_ops)
+            )
 
     def _run_inference(
         self,
@@ -67,6 +86,8 @@ class LTXFastVideoPipeline:
     ) -> tuple[torch.Tensor | Iterator[torch.Tensor], AudioOrNone]:
         from ltx_pipelines.utils.args import ImageConditioningInput as _LtxImageInput
 
+        logger.debug("Running inference: seed=%d, size=%dx%d, num_frames=%d, num_images=%d", 
+                     seed, width, height, num_frames, len(images))
         return self.pipeline(
             prompt=prompt,
             seed=seed,

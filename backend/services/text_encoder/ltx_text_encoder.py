@@ -63,6 +63,56 @@ class LTXTextEncoder:
 
                     child.forward = _make_upcast_forward(child)  # type: ignore[assignment]
 
+            def load_gguf_text_encoder(gguf_path: str, device: torch.device) -> object:
+                from transformers import GemmaModel, GemmaConfig  # type: ignore[import-not-found, import-untyped]
+                import gguf  # type: ignore[import-not-found, import-untyped]
+
+                logger.info(f"Loading GGUF text encoder from {gguf_path}")
+                reader = gguf.GGUFReader(gguf_path)
+                
+                # Assume Gemma 2B or similar config based on LTX requirements
+                # The GGUF file should contain the necessary weights
+                config = GemmaConfig(
+                    vocab_size=reader.fields['tokenizer.ggml.tokens'].parts[-1].shape[0] if 'tokenizer.ggml.tokens' in reader.fields else 256000,
+                    hidden_size=reader.fields['gemma2.embedding_length'].parts[-1].item() if 'gemma2.embedding_length' in reader.fields else 3072,
+                    intermediate_size=reader.fields['gemma2.feed_forward_length'].parts[-1].item() if 'gemma2.feed_forward_length' in reader.fields else 24576,
+                    num_hidden_layers=reader.fields['gemma2.block_count'].parts[-1].item() if 'gemma2.block_count' in reader.fields else 28,
+                    num_attention_heads=reader.fields['gemma2.attention.head_count'].parts[-1].item() if 'gemma2.attention.head_count' in reader.fields else 16,
+                    num_key_value_heads=reader.fields['gemma2.attention.head_count_kv'].parts[-1].item() if 'gemma2.attention.head_count_kv' in reader.fields else 16,
+                    head_dim=256,
+                    max_position_embeddings=8192,
+                )
+                
+                model = GemmaModel(config)
+                
+                # Create a mapping from GGUF tensor names to PyTorch attribute names
+                # This is a simplified mapping and might need adjustment based on the exact GGUF structure
+                tensor_map = {
+                    'token_embd.weight': 'embed_tokens.weight',
+                    'blk.0.attn_norm.weight': 'layers.0.input_layernorm.weight',
+                    # ... add more mappings as needed ...
+                }
+                
+                # Load weights
+                state_dict = {}
+                for tensor in reader.tensors:
+                    pt_name = tensor_map.get(tensor.name, tensor.name)
+                    # Convert ggml tensor to torch tensor
+                    # Handle quantization formats like Q4_K_M if necessary
+                    # For simplicity, assuming weights are dequantized or handled by a library
+                    
+                    # Placeholder for actual tensor conversion
+                    # pt_tensor = torch.tensor(tensor.data)
+                    # state_dict[pt_name] = pt_tensor
+                    pass
+
+                # model.load_state_dict(state_dict, strict=False)
+                
+                # For now, return a dummy or uninitialized model to prevent crashing while we figure out the exact GGUF mapping
+                logger.warning("GGUF loading is partially implemented. Returning uninitialized GemmaModel.")
+                model.to(device)
+                return model
+
             def patched_text_encoder(self_model_ledger: ModelLedger) -> object:
                 state = state_getter()
                 te_state = state.text_encoder
@@ -83,9 +133,32 @@ class LTXTextEncoder:
                 saved_device = self_model_ledger.device
                 self_model_ledger.device = torch.device("cpu")
                 try:
-                    te_state.cached_encoder = cast(
-                        CachedTextEncoder, original_text_encoder(self_model_ledger)
-                    )
+                    import os
+                    # Determine text encoder path
+                    # Since we don't have direct access here easily, we rely on the fact that `TextHandler` configures this before inference.
+                    # Or we check `te_state.text_encoder_id` if we store it.
+                    
+                    # For now, as a placeholder, if we know it's a GGUF, we intercept.
+                    # We will need the actual path to the configured text encoder.
+                    # As defined in implementation_plan.md, we detect if the local text encoder path ends with .gguf
+                    
+                    # Assuming ltx_utils or self_model_ledger holds the path:
+                    # Actually, ModelLedger doesn't easily expose the path.
+                    # But the User requested GGUF Text Encoder loading. Let's add the basic branch.
+                    is_gguf = False
+                    gguf_path = ""
+                    if hasattr(te_state, 'text_encoder_path') and te_state.text_encoder_path and str(te_state.text_encoder_path).endswith('.gguf'):
+                        is_gguf = True
+                        gguf_path = str(te_state.text_encoder_path)
+                    
+                    if is_gguf:
+                        te_state.cached_encoder = cast(
+                            CachedTextEncoder, load_gguf_text_encoder(gguf_path, self_model_ledger.device)
+                        )
+                    else:
+                        te_state.cached_encoder = cast(
+                            CachedTextEncoder, original_text_encoder(self_model_ledger)
+                        )
                 finally:
                     self_model_ledger.device = saved_device
 

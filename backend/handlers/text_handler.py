@@ -5,17 +5,17 @@ from __future__ import annotations
 from threading import RLock
 from typing import TYPE_CHECKING
 
-from handlers.base import StateHandlerBase, with_state_lock
-from runtime_config.model_download_specs import resolve_model_path
-from state.app_state_types import AppState, TextEncodingResult
+from handlers.base import StateHandlerBase, with_state_lock  # type: ignore[import-not-found, import-untyped]
+from runtime_config.model_download_specs import resolve_model_path  # type: ignore[import-not-found, import-untyped]
+from state.app_state_types import AppState, TextEncodingResult  # type: ignore[import-not-found, import-untyped]
 
 if TYPE_CHECKING:
-    from runtime_config.runtime_config import RuntimeConfig
+    from runtime_config.runtime_config import RuntimeConfig  # type: ignore[import-not-found, import-untyped]
 
 
 class TextHandler(StateHandlerBase):
-    def __init__(self, state: AppState, lock: RLock, config: RuntimeConfig) -> None:
-        super().__init__(state, lock, config)
+    def __init__(self, state: AppState, lock: RLock, config: "RuntimeConfig") -> None:
+        super().__init__(state, lock, config)  # type: ignore[call-arg]
 
     @with_state_lock
     def _get_cached_prompt(self, prompt: str, enhance_prompt: bool) -> TextEncodingResult | None:
@@ -66,7 +66,7 @@ class TextHandler(StateHandlerBase):
             return settings.use_local_text_encoder  # setting is tiebreaker
         return local_available  # use whichever is available
 
-    def prepare_text_encoding(self, prompt: str, enhance_prompt: bool) -> None:
+    def prepare_text_encoding(self, prompt: str, enhance_prompt: bool, text_encoder_id: str | None = None) -> None:
         """Validate settings and prepare text embeddings for a generation run.
 
         Raises RuntimeError with a prefixed message if text encoding is
@@ -74,6 +74,15 @@ class TextHandler(StateHandlerBase):
         with no local fallback.
         """
         settings = self.state.app_settings.model_copy(deep=True)
+        
+        # Save the requested text encoder path to state for `ltx_text_encoder.py`
+        if self.state.text_encoder is not None:
+            if text_encoder_id:
+                # If a specific ID is provided (e.g. a GGUF), resolve its path
+                self.state.text_encoder.text_encoder_path = self.models_dir / text_encoder_id
+            else:
+                self.state.text_encoder.text_encoder_path = resolve_model_path(self.models_dir, self.config.model_download_specs, "text_encoder")
+        
         api_available = bool(settings.ltx_api_key)
         text_encoder_dir = resolve_model_path(self.models_dir, self.config.model_download_specs,"text_encoder")
         local_available = text_encoder_dir.exists() and any(text_encoder_dir.iterdir())
@@ -97,6 +106,11 @@ class TextHandler(StateHandlerBase):
     def resolve_gemma_root(self) -> str | None:
         if not self.should_use_local_encoding():
             return None
+        
+        # If a specific local text encoder path is set in state, use it
+        if self.state.text_encoder is not None and getattr(self.state.text_encoder, 'text_encoder_path', None) is not None:
+            return str(self.state.text_encoder.text_encoder_path)
+            
         text_encoder_dir = resolve_model_path(self.models_dir, self.config.model_download_specs,"text_encoder")
         return str(text_encoder_dir)
 

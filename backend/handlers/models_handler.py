@@ -13,6 +13,9 @@ from state.app_state_types import AppState, AvailableFiles, ModelFileType
 
 from runtime_config.runtime_config import RuntimeConfig
 from runtime_config.gguf_catalog import GGUF_CATALOG, GgufModelId
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ModelsHandler(StateHandlerBase):
@@ -44,6 +47,7 @@ class ModelsHandler(StateHandlerBase):
 
     @with_state_lock
     def refresh_available_files(self) -> AvailableFiles:
+        logger.debug("Refreshing available model files...")
         self.state.available_files = self._scan_available_files()
         return self.state.available_files.copy()
         
@@ -99,6 +103,8 @@ class ModelsHandler(StateHandlerBase):
             has_api_key=bool(settings.ltx_api_key),
             use_local_text_encoder=settings.use_local_text_encoder,
         )
+        logger.debug("Resolved required model types (has_api_key=%s, use_local_text_encoder=%s): %s",
+                     bool(settings.ltx_api_key), settings.use_local_text_encoder, required)
         return [
             model_type
             for model_type in MODEL_FILE_ORDER

@@ -1,0 +1,4 @@
+distilled/ltx-2.3-22b-distilled-Q4_K_M.gguf:14326857120
+distilled/ltx-2.3-22b-distilled-Q5_K_S.gguf:15248901536
+distilled/ltx-2.3-22b-distilled-Q6_K.gguf:17774906784
+distilled/ltx-2.3-22b-distilled-Q8_0.gguf:22755540384

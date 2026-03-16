@@ -42,6 +42,7 @@ class GenerationHandler(StateHandlerBase):
             id=generation_id,
             progress=GenerationProgress(phase="", progress=0, current_step=0, total_steps=0),
         )
+        logger.debug("Started local GPU generation %s", generation_id)
 
     @with_state_lock
     def start_api_generation(self, generation_id: str) -> None:
@@ -52,6 +53,7 @@ class GenerationHandler(StateHandlerBase):
             id=generation_id,
             progress=GenerationProgress(phase="", progress=0, current_step=None, total_steps=None),
         )
+        logger.debug("Started API generation %s", generation_id)
 
     @with_state_lock
     def _gpu_generation(self) -> GenerationState | None:
@@ -108,6 +110,7 @@ class GenerationHandler(StateHandlerBase):
                         running.progress.progress = progress
                         running.progress.current_step = current_step
                         running.progress.total_steps = total_steps
+                        logger.debug("Local GPU generation %s progress: phase=%s, progress=%d", running.id, phase, progress)
                     case _:
                         return
             case "api":
@@ -130,6 +133,7 @@ class GenerationHandler(StateHandlerBase):
                     case GpuSlot(generation=GenerationRunning(id=generation_id)):
                         cancelled = GenerationCancelled(id=generation_id)
                         self.state.gpu_slot.generation = cancelled
+                        logger.debug("Requesting cancellation of local GPU generation %s", generation_id)
                         return CancelResponse(status="cancelling", id=cancelled.id)
                     case _:
                         pass
@@ -138,6 +142,7 @@ class GenerationHandler(StateHandlerBase):
                     case GenerationRunning(id=generation_id):
                         cancelled = GenerationCancelled(id=generation_id)
                         self.state.api_generation = cancelled
+                        logger.debug("Requesting cancellation of API generation %s", generation_id)
                         return CancelResponse(status="cancelling", id=cancelled.id)
                     case _:
                         pass
@@ -165,12 +170,14 @@ class GenerationHandler(StateHandlerBase):
                 match self.state.gpu_slot:
                     case GpuSlot(generation=GenerationRunning(id=generation_id)) as gpu_slot:
                         gpu_slot.generation = GenerationComplete(id=generation_id, result=result)
+                        logger.debug("Local GPU generation %s completed successfully", generation_id)
                     case _:
                         return
             case "api":
                 match self.state.api_generation:
                     case GenerationRunning(id=generation_id):
                         self.state.api_generation = GenerationComplete(id=generation_id, result=result)
+                        logger.debug("API generation %s completed successfully", generation_id)
                     case _:
                         return
             case _:

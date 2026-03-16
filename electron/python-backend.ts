@@ -250,6 +250,7 @@ export async function startPythonBackend(): Promise<void> {
         LTX_AUTH_TOKEN: authToken,
         LTX_ADMIN_TOKEN: adminToken,
         LTX_LOG_FILE: getCurrentLogFilename(),
+        LTX_LOG_LEVEL: process.env.LTX_LOG_LEVEL || 'INFO',
         LTX_APP_DATA_DIR: getAppDataDir(),
         PYTORCH_ENABLE_MPS_FALLBACK: '1',
         // Set PYTHONHOME for bundled Python on macOS so it finds its stdlib

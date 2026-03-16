@@ -32,15 +32,21 @@ from state.app_settings import AppSettings
 
 import platform
 
+# Allow external caller (or electron) to specify log level (e.g. DEBUG)
+_log_level_str = os.environ.get("LTX_LOG_LEVEL", "INFO").upper()
+_log_level = getattr(logging, _log_level_str, logging.INFO)
+
 # Backend logs to console only — Electron captures stdout/stderr and writes
 # them to the session log file. This ensures *all* output (including early
 # import errors and unhandled tracebacks) reaches the log, not just messages
 # that go through Python's logging module.
 console_handler = logging.StreamHandler(sys.stdout)
-console_handler.setLevel(logging.INFO)
+console_handler.setLevel(_log_level)
 
-logging.basicConfig(level=logging.INFO, handlers=[console_handler])
+logging.basicConfig(level=_log_level, handlers=[console_handler])
 logger = logging.getLogger(__name__)
+
+logger.debug("LTX_LOG_LEVEL is set to: %s", _log_level_str)
 
 # ============================================================
 # SageAttention Integration
@@ -135,6 +141,9 @@ OUTPUTS_DIR = APP_DATA_DIR / "outputs"
 OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
 logger.info(f"Models directory: {DEFAULT_MODELS_DIR}")
+logger.debug("App data dir resolved to: %s", APP_DATA_DIR)
+logger.debug("Project root: %s", PROJECT_ROOT)
+logger.debug("Outputs directory: %s", OUTPUTS_DIR)
 
 # ============================================================
 # Settings
@@ -219,6 +228,7 @@ handler = build_initial_state(runtime_config, DEFAULT_APP_SETTINGS)
 auth_token = os.environ.get("LTX_AUTH_TOKEN", "")
 admin_token = os.environ.get("LTX_ADMIN_TOKEN", "")
 
+logger.debug("Creating FastAPI app with app_factory.create_app()")
 app = create_app(handler=handler, allowed_origins=DEFAULT_ALLOWED_ORIGINS, auth_token=auth_token, admin_token=admin_token)
 
 
@@ -270,7 +280,9 @@ if __name__ == "__main__":
     warmup_thread.start()
 
     # Use our root logging config so uvicorn logs go to stdout (not its
-    # default stderr), letting Electron tag them correctly as INFO.
+    # default stderr), letting Electron tag them correctly as INFO/DEBUG.
+    _uvicorn_log_level_lower = _log_level_str.lower()
+    _uvicorn_log_level_upper = _log_level_str.upper()
     log_config: dict[str, object] = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -281,9 +293,9 @@ if __name__ == "__main__":
             },
         },
         "loggers": {
-            "uvicorn": {"handlers": ["default"], "level": "INFO"},
-            "uvicorn.error": {"handlers": ["default"], "level": "INFO", "propagate": False},
-            "uvicorn.access": {"handlers": ["default"], "level": "INFO", "propagate": False},
+            "uvicorn": {"handlers": ["default"], "level": _uvicorn_log_level_upper},
+            "uvicorn.error": {"handlers": ["default"], "level": _uvicorn_log_level_upper, "propagate": False},
+            "uvicorn.access": {"handlers": ["default"], "level": _uvicorn_log_level_upper, "propagate": False},
         },
     }
 
@@ -295,7 +307,7 @@ if __name__ == "__main__":
     sock.bind(("127.0.0.1", port))
     actual_port = int(sock.getsockname()[1])
 
-    config = uvicorn.Config(app, host="127.0.0.1", port=actual_port, log_level="info", access_log=False, log_config=log_config)
+    config = uvicorn.Config(app, host="127.0.0.1", port=actual_port, log_level=_uvicorn_log_level_lower, access_log=True, log_config=log_config)
     server = uvicorn.Server(config)
 
     _orig_startup = server.startup

@@ -59,6 +59,7 @@ class DownloadHandler(StateHandlerBase):
             completed_files=set(),
             completed_bytes=0,
         )
+        logger.debug("Started download session %s for files: %s", session_id, files_to_download)
         return session_id
 
     @with_state_lock
@@ -75,6 +76,7 @@ class DownloadHandler(StateHandlerBase):
             downloaded_bytes=0,
             speed_bytes_per_sec=0.0,
         )
+        logger.debug("Download session %s started file %s -> %s", session.id, file_type, target)
 
     @with_state_lock
     def finish_download(self) -> None:
@@ -85,6 +87,7 @@ class DownloadHandler(StateHandlerBase):
             session.completed_bytes += session.current_running_file.downloaded_bytes
             session.completed_files.add(session.current_running_file.file_type)
         self.state.completed_download_sessions[session.id] = "complete"
+        logger.debug("Download session %s completed successfully", session.id)
         self.state.downloading_session = None
 
     @with_state_lock
@@ -259,6 +262,8 @@ class DownloadHandler(StateHandlerBase):
         available = self.state.available_files.copy()
         
         gguf_files = self._models_handler._scan_gguf_files()
+        
+        logger.debug("Discovering files to download. Request model_types: %s, gguf_models: %s", model_types, gguf_models)
 
         files_to_download: dict[str, str] = {}
         for model_type in MODEL_FILE_ORDER:
@@ -277,6 +282,7 @@ class DownloadHandler(StateHandlerBase):
             spec = GGUF_CATALOG[gguf_id]
             files_to_download[str(gguf_id)] = str(spec["filename"])
             
+        logger.debug("Files to download resolved to: %s", files_to_download)
         return files_to_download
 
     def _download_models_worker(self, files_to_download: dict[str, str]) -> None:

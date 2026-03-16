@@ -307,9 +307,10 @@ class FakeModelDownloader:
         filename: str,
         local_dir: str,
         on_progress: Callable[[int], None] | None = None,
+        token: str | None = None,
     ) -> Path:
         self._raise_if_needed()
-        self.calls.append({"kind": "file", "repo_id": repo_id, "filename": filename, "local_dir": local_dir, "on_progress": on_progress})
+        self.calls.append({"kind": "file", "repo_id": repo_id, "filename": filename, "local_dir": local_dir, "on_progress": on_progress, "token": token})
 
         if on_progress is not None:
             on_progress(512)
@@ -325,6 +326,7 @@ class FakeModelDownloader:
         repo_id: str,
         local_dir: str,
         on_progress: Callable[[int], None] | None = None,
+        token: str | None = None,
     ) -> Path:
         self._raise_if_needed()
         self.calls.append(
@@ -333,6 +335,7 @@ class FakeModelDownloader:
                 "repo_id": repo_id,
                 "local_dir": local_dir,
                 "on_progress": on_progress,
+                "token": token,
             }
         )
 
@@ -490,8 +493,9 @@ class FakeFastVideoPipeline(_FakeVideoPipelineBase):
         gemma_root: str | None,
         upsampler_path: str,
         device: str | object,
+        distilled_lora_path: str | None = None,
     ) -> "FakeFastVideoPipeline":
-        del checkpoint_path, gemma_root, upsampler_path, device
+        del checkpoint_path, gemma_root, upsampler_path, device, distilled_lora_path
         pipeline = FakeFastVideoPipeline._singleton
         if pipeline is None:
             raise RuntimeError("FakeFastVideoPipeline singleton is not bound")

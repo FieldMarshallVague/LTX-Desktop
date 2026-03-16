@@ -36,6 +36,7 @@ class TestIcLoraDownload:
         response = client.post("/api/models/download", json={"modelTypes": ["ic_lora"]})
         assert response.status_code == 200
         assert response.json()["status"] == "started"
+        assert not test_state.task_runner.errors, f"Background task crashed: {test_state.task_runner.errors[0]}"
         assert _model_path(test_state,"ic_lora").exists()
 
         ic_lora_spec = test_state.config.spec_for("ic_lora")

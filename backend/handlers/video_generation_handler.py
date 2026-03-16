@@ -138,6 +138,7 @@ class VideoGenerationHandler(StateHandlerBase):
                 seed=seed,
                 camera_motion=req.cameraMotion,
                 negative_prompt=req.negativePrompt,
+                text_encoder_id=req.text_encoder_id,
             )
 
             self._generation.complete_generation(output_path)
@@ -163,6 +164,7 @@ class VideoGenerationHandler(StateHandlerBase):
         seed: int,
         camera_motion: VideoCameraMotion,
         negative_prompt: str,
+        text_encoder_id: str | None = None,
     ) -> str:
         t_total_start = time.perf_counter()
         gen_mode = "i2v" if image is not None else "t2v"
@@ -205,7 +207,7 @@ class VideoGenerationHandler(StateHandlerBase):
 
             encoding_method = "api" if use_api_encoding else "local"
             t_text_start = time.perf_counter()
-            self._text.prepare_text_encoding(enhanced_prompt, enhance_prompt=enhance)
+            self._text.prepare_text_encoding(enhanced_prompt, enhance_prompt=enhance, text_encoder_id=text_encoder_id)
             t_text_end = time.perf_counter()
             logger.info("[%s] Text encoding (%s): %.2fs", gen_mode, encoding_method, t_text_end - t_text_start)
 
@@ -298,7 +300,7 @@ class VideoGenerationHandler(StateHandlerBase):
 
             self._generation.update_progress("loading_model", 5, 0, total_steps)
             self._generation.update_progress("encoding_text", 10, 0, total_steps)
-            self._text.prepare_text_encoding(enhanced_prompt, enhance_prompt=a2v_enhance)
+            self._text.prepare_text_encoding(enhanced_prompt, enhance_prompt=a2v_enhance, text_encoder_id=req.text_encoder_id)
             self._generation.update_progress("inference", 15, 0, total_steps)
 
             a2v_state.pipeline.generate(
