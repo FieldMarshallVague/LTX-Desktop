@@ -495,8 +495,9 @@ class FakeFastVideoPipeline(_FakeVideoPipelineBase):
         device: str | object,
         distilled_lora_path: str | None = None,
         model_type: str = "fast",
+        gguf_path: str | None = None,
     ) -> "FakeFastVideoPipeline":
-        del checkpoint_path, gemma_root, upsampler_path, device, distilled_lora_path
+        del checkpoint_path, gemma_root, upsampler_path, device, distilled_lora_path, gguf_path
         pipeline = FakeFastVideoPipeline._singleton
         if pipeline is None:
             raise RuntimeError("FakeFastVideoPipeline singleton is not bound")

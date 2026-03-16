@@ -121,11 +121,14 @@ class PipelinesHandler(StateHandlerBase):
         gemma_root = self._text_handler.resolve_gemma_root()
 
         distilled_lora_path = None
+        gguf_path: str | None = None
         if model_type == "fast":
             checkpoint_path = str(resolve_model_path(self.models_dir, self.config.model_download_specs,"checkpoint"))
         elif model_type in GGUF_CATALOG:
             gguf_spec = GGUF_CATALOG[model_type]
-            checkpoint_path = str(self.models_dir / gguf_spec["filename"])
+            gguf_path = str(self.models_dir / gguf_spec["filename"])
+            # Use the standard safetensors checkpoint for VAE/audio/text encoder
+            checkpoint_path = str(resolve_model_path(self.models_dir, self.config.model_download_specs,"checkpoint"))
             if not gguf_spec["is_distilled"]:
                 distilled_lora_path = str(resolve_model_path(self.models_dir, self.config.model_download_specs,"distilled_lora"))
         else:
@@ -140,6 +143,7 @@ class PipelinesHandler(StateHandlerBase):
             self.config.device,
             distilled_lora_path,
             model_type=model_type,
+            gguf_path=gguf_path,
         )
 
         state = VideoPipelineState(

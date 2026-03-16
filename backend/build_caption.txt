@@ -1,0 +1,40 @@
+﻿.venv\Scripts\python.exe : H:\airt\ltx\backend\
+.venv\Lib\site-packages\torch\cuda\__init__.py:
+65: FutureWarning: The pynvml package is 
+deprecated. Please install nvidia-ml-py 
+instead. If you did not install pynvml 
+directly, please report this to the 
+maintainers of the package that installed 
+pynvml for you.
+At line:1 char:1
++ .venv\Scripts\python.exe -c "
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (H 
+   :\airt\ltx\bac...pynvml for you.:String) [  
+  ], RemoteException
+    + FullyQualifiedErrorId : NativeCommandErr 
+   or
+ 
+  import pynvml  # type: ignore[import]
+def _build_caption_projections(
+    config: dict,
+    is_av: bool,
+) -> tuple[torch.nn.Module | None, torch.nn.Module | None]:
+    """Build caption projections for the transformer when projection is NOT in the text encoder.
+    19B models: projection is in the transformer (caption_proj_before_connector=False).
+    20B models: projection is in the text encoder, so no projections are created here.
+    Args:
+        config: Full model config dict (must contain "transformer" key).
+        is_av: Whether this is an audio-video model. When False, audio projection is skipped.
+    Returns:
+        Tuple of (video_caption_projection, audio_caption_projection), both None for 20B models.
+    """
+    transformer_config = config.get("transformer", {})
+    if transformer_config.get("caption_proj_before_connector", False):
+        return None, None
+
+    with torch.device("meta"):
+        caption_projection = create_caption_projection(transformer_config)
+        audio_caption_projection = create_caption_projection(transformer_config, audio=True) if is_av else None
+    return caption_projection, audio_caption_projection
+

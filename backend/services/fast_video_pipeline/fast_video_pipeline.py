@@ -21,6 +21,7 @@ class FastVideoPipeline(Protocol):
         device: torch.device,
         distilled_lora_path: str | None = None,
         model_type: str = "fast",
+        gguf_path: str | None = None,
     ) -> "FastVideoPipeline":
         ...
 
