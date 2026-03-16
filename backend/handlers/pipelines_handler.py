@@ -139,6 +139,7 @@ class PipelinesHandler(StateHandlerBase):
             upsampler_path,
             self.config.device,
             distilled_lora_path,
+            model_type=model_type,
         )
 
         state = VideoPipelineState(

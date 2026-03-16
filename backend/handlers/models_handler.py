@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 from threading import RLock
-from typing import TYPE_CHECKING
 
 from api_types import ModelFileStatus, ModelInfo, ModelsStatusResponse, TextEncoderStatus
 from handlers.base import StateHandlerBase, with_state_lock
@@ -131,7 +130,7 @@ class ModelsHandler(StateHandlerBase):
             spec = self.config.spec_for(model_type)
             path = files[model_type]
             exists = path is not None
-            actual_size = self._path_size(path, is_folder=spec.is_folder) if exists else 0
+            actual_size = self._path_size(path, is_folder=spec.is_folder) if path is not None else 0
             required = model_type in required_types
             if required:
                 total_size += spec.expected_size_bytes

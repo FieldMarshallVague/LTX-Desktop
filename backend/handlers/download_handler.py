@@ -12,6 +12,7 @@ from uuid import uuid4
 
 from api_types import DownloadProgressResponse
 from handlers.base import StateHandlerBase, with_state_lock
+from typing import cast
 from handlers.models_handler import ModelsHandler
 from runtime_config.model_download_specs import (
     MODEL_FILE_ORDER,
@@ -148,14 +149,14 @@ class DownloadHandler(StateHandlerBase):
                 if ft in GGUF_CATALOG:
                     expected_total_bytes += GGUF_CATALOG[ft]["expected_size_bytes"]
                 else:
-                    expected_total_bytes += self.config.spec_for(ft).expected_size_bytes
+                    expected_total_bytes += self.config.spec_for(cast(ModelFileType, ft)).expected_size_bytes
 
             current_file_progress = 0.0
             if rf is not None:
                 if rf.file_type in GGUF_CATALOG:
                     exp_size = GGUF_CATALOG[rf.file_type]["expected_size_bytes"]
                 else:
-                    spec = self.config.spec_for(rf.file_type)
+                    spec = self.config.spec_for(cast(ModelFileType, rf.file_type))
                     exp_size = spec.expected_size_bytes
                 
                 if exp_size > 0:
@@ -217,9 +218,9 @@ class DownloadHandler(StateHandlerBase):
             dst = self.models_dir / spec_gguf["filename"]
             is_folder = False
         else:
-            spec = self.config.spec_for(file_type)
-            src = resolve_downloading_target_path(self.models_dir, self.config.model_download_specs, file_type)
-            dst = resolve_model_path(self.models_dir, self.config.model_download_specs, file_type)
+            spec = self.config.spec_for(cast(ModelFileType, file_type))
+            src = resolve_downloading_target_path(self.models_dir, self.config.model_download_specs, cast(ModelFileType, file_type))
+            dst = resolve_model_path(self.models_dir, self.config.model_download_specs, cast(ModelFileType, file_type))
             is_folder = spec.is_folder
 
         def _robust_rename() -> None:
@@ -261,7 +262,7 @@ class DownloadHandler(StateHandlerBase):
         self._models_handler.refresh_available_files()
         available = self.state.available_files.copy()
         
-        gguf_files = self._models_handler._scan_gguf_files()
+        gguf_files = self._models_handler._scan_gguf_files()  # pyright: ignore[reportPrivateUsage]
         
         logger.debug("Discovering files to download. Request model_types: %s, gguf_models: %s", model_types, gguf_models)
 
@@ -298,11 +299,11 @@ class DownloadHandler(StateHandlerBase):
                 filename = gguf_spec["filename"]
                 local_dir = str(resolve_downloading_dir(self.models_dir) / file_type)
             else:
-                spec = self.config.spec_for(file_type)
+                spec = self.config.spec_for(cast(ModelFileType, file_type))
                 repo_id = spec.repo_id
                 is_folder = spec.is_folder
                 filename = spec.name
-                local_dir = str(resolve_downloading_path(self.models_dir, self.config.model_download_specs, file_type))
+                local_dir = str(resolve_downloading_path(self.models_dir, self.config.model_download_specs, cast(ModelFileType, file_type)))
 
             logger.info("Downloading %s from %s", target_name, repo_id)
 

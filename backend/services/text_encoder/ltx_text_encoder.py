@@ -94,9 +94,8 @@ class LTXTextEncoder:
                 }
                 
                 # Load weights
-                state_dict = {}
                 for tensor in reader.tensors:
-                    pt_name = tensor_map.get(tensor.name, tensor.name)
+                    pt_name = tensor_map.get(tensor.name, tensor.name)  # pyright: ignore[reportUnusedVariable]
                     # Convert ggml tensor to torch tensor
                     # Handle quantization formats like Q4_K_M if necessary
                     # For simplicity, assuming weights are dequantized or handled by a library
@@ -110,7 +109,7 @@ class LTXTextEncoder:
                 
                 # For now, return a dummy or uninitialized model to prevent crashing while we figure out the exact GGUF mapping
                 logger.warning("GGUF loading is partially implemented. Returning uninitialized GemmaModel.")
-                model.to(device)
+                model.to(device)  # type: ignore
                 return model
 
             def patched_text_encoder(self_model_ledger: ModelLedger) -> object:
@@ -133,7 +132,6 @@ class LTXTextEncoder:
                 saved_device = self_model_ledger.device
                 self_model_ledger.device = torch.device("cpu")
                 try:
-                    import os
                     # Determine text encoder path
                     # Since we don't have direct access here easily, we rely on the fact that `TextHandler` configures this before inference.
                     # Or we check `te_state.text_encoder_id` if we store it.

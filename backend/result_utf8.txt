@@ -1,0 +1,667 @@
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:9 Type of parameter "tensor" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:9 Type annotation is missing for parameter "tensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:10 Argument type is unknown
+Â Â Argument corresponds to parameter "o" in function "getattr"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:12 Type of parameter "tensor" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:12 Type annotation is missing for parameter "tensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:13 Argument type is unknown
+Â Â Argument corresponds to parameter "tensor" in function "is_torch_compatible"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:15 Return type, "Unknown | Tensor", is partially unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:15 Type of parameter "tensor" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:15 Type annotation is missing for parameter "tensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:15 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:15 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:15 Type of parameter "dequant_dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:15 Type annotation is missing for parameter "dequant_dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:16 Argument type is unknown
+Â Â Argument corresponds to parameter "o" in function "getattr"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:17 Argument type is unknown
+Â Â Argument corresponds to parameter "o" in function "getattr"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:17 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:17 Argument type is unknown
+Â Â Argument corresponds to parameter "default" in function "getattr"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:20 Type of "to" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:20 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:22 Type of "dequant_dtype" is partially unknown
+Â Â Type of "dequant_dtype" is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:23 Type of "to" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:23 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:23 Type of "data" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:23 Argument type is unknown
+Â Â Argument corresponds to parameter "data" in function "dequantize"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:27 Type of "cpu" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:27 Type of "numpy" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:27 Argument type is unknown
+Â Â Argument corresponds to parameter "data" in function "dequantize"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:28 Type of "from_numpy" is partially unknown
+Â Â Type of "from_numpy" is "(ndarray: Unknown) -> Tensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:28 Type of "device" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:28 Argument type is unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:28 Argument type is partially unknown
+Â Â Argument corresponds to parameter "dtype" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type of parameter "data" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type annotation is missing for parameter "data"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type of parameter "qtype" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type annotation is missing for parameter "qtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type of parameter "oshape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type annotation is missing for parameter "oshape"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:30 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:35 Type of "dequantize_blocks" is partially unknown
+Â Â Type of "dequantize_blocks" is "(blocks: Unknown, block_size: Unknown, type_size: Unknown, dtype: Unknown | None = None) -> Unknown"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:37 Type of "rows" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:37 Type of "reshape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:37 Type of "view" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:38 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:41 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:41 Type of "numel" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:42 Type of "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:42 Type of "reshape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:43 Type of "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:43 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "dequantize_blocks_BF16"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:44 Type of "reshape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:44 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:46 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:46 Type of parameter "x" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:46 Type annotation is missing for parameter "x"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:48 Type of "x" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:48 Type of "view" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:48 Type of "to" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:49 Type of "unsqueeze" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:49 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:51 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:51 Type of parameter "x" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:51 Type annotation is missing for parameter "x"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:52 Type of "x" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:52 Type of "view" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:52 Type of "to" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:53 Type of "unsqueeze" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:53 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:55 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:55 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:55 Type of parameter "args" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:55 Type annotation is missing for parameter "args"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:56 Type of "n_max" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:56 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:57 Type of "dims" is partially unknown
+Â Â Type of "dims" is "list[Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:57 Argument type is partially unknown
+Â Â Argument corresponds to parameter "iterable" in function "__init__"
+Â Â Argument type is "tuple[Unknown, ...]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:57 Argument type is partially unknown
+Â Â Argument corresponds to parameter "iterable" in function "sum"
+Â Â Argument type is "tuple[Unknown, ...]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:58 Argument type is unknown
+Â Â Argument corresponds to parameter "tensor" in function "split"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:58 Argument type is partially unknown
+Â Â Argument corresponds to parameter "split_size_or_sections" in function "split"
+Â Â Argument type is "list[Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:61 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:62 Type of "view" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:62 Return type is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:62 Type of "view" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:62 Type of "to" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:65 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:66 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:67 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:71 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:72 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:72 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:74 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:75 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:76 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:79 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:80 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:82 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:87 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:88 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:88 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:90 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:91 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:94 Argument type is unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:95 Argument type is unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:95 Argument type is unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:98 Argument type is unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:103 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:104 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:104 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:106 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:107 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:108 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:110 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:111 Argument type is unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:115 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:116 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:116 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:118 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:119 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:121 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:122 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:129 Type of parameter "scales" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:129 Type annotation is missing for parameter "scales"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:130 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:130 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:131 Type of "scales" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:131 Type of "view" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:132 Type of "scales" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:132 Type of "reshape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:134 Argument type is unknown
+Â Â Argument corresponds to parameter "tensor" in function "split"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:134 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:134 Argument type is unknown
+Â Â Argument corresponds to parameter "split_size_or_sections" in function "split"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:139 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[8]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:139 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[8]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:141 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:142 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:142 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:144 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:146 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:147 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:148 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:150 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[64]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:151 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:152 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:153 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:155 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:157 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[256]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:159 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:160 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:160 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:162 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:164 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:165 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:169 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:170 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:172 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:173 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:174 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:175 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:178 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[256]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:180 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:181 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:181 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:183 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:184 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:185 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:189 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:190 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:192 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:193 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:195 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[256]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:197 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:198 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:198 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:200 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:201 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:204 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[1], Literal[8]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:205 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:206 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[1], Literal[4]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:207 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:211 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:213 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:214 Argument type is unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:215 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[16]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:216 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[16]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:219 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[256]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:221 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:222 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:222 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:224 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:225 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:226 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:229 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:230 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:234 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:235 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[16], Literal[16]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:238 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:243 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:244 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:244 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:246 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:247 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:249 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:250 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:253 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type of parameter "blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type annotation is missing for parameter "blocks"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type of parameter "block_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type annotation is missing for parameter "block_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type of parameter "type_size" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type annotation is missing for parameter "type_size"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:258 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:259 Type of "n_blocks" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:259 Type of "shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:260 Argument type is unknown
+Â Â Argument corresponds to parameter "blocks" in function "split_block_dims"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:261 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:267 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:268 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:270 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:271 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:274 Argument type is partially unknown
+Â Â Argument corresponds to parameter "device" in function "to"
+Â Â Argument type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:274 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:276 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[1], Literal[16]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:277 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[32], Literal[1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:280 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1], Literal[32]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:285 Argument type is partially unknown
+Â Â Argument corresponds to parameter "shape" in function "reshape"
+Â Â Argument type is "tuple[Unknown, Literal[-1]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\dequant.py:287 Type of "dequantize_functions" is partially unknown
+Â Â Type of "dequantize_functions" is "dict[GGMLQuantizationType, (blocks: Unknown, block_size: Unknown, type_size: Unknown, dtype: Unknown | None = None) -> Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\fast_video_pipeline.py:5 Import "ClassVar" is not accessed
+h:\airt\ltx\backend\services\fast_video_pipeline\fast_video_pipeline.py:5 Import "Literal" is not accessed
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:2 Import "Any" is not accessed
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:10 Type of "dequantize_tensor" is partially unknown
+Â Â Type of "dequantize_tensor" is "(tensor: Unknown, dtype: Unknown | None = None, dequant_dtype: Unknown | None = None) -> (Unknown | Tensor)"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:10 Type of "is_quantized" is partially unknown
+Â Â Type of "is_quantized" is "(tensor: Unknown) -> bool"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type of parameter "args" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type annotation is missing for parameter "args"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type of parameter "tensor_type" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type annotation is missing for parameter "tensor_type"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type of parameter "tensor_shape" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type annotation is missing for parameter "tensor_shape"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type of parameter "kwargs" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:15 Type annotation is missing for parameter "kwargs"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:17 Type of "tensor_type" is partially unknown
+Â Â Type of "tensor_type" is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:18 Type of "tensor_shape" is partially unknown
+Â Â Type of "tensor_shape" is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type of parameter "args" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type annotation is missing for parameter "args"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type of parameter "tensor_type" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type annotation is missing for parameter "tensor_type"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type of parameter "tensor_shape" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type annotation is missing for parameter "tensor_shape"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type of parameter "kwargs" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:20 Type annotation is missing for parameter "kwargs"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:21 Type of "__new__" is partially unknown
+Â Â Type of "__new__" is "(cls: type[Self@GGMLTensor], ...) -> Self@GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:21 Argument type is unknown
+Â Â Argument corresponds to parameter "args" in function "__new__"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:21 Argument type is unknown
+Â Â Argument corresponds to parameter "kwargs" in function "__new__"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:23 Type of parameter "args" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:23 Type annotation is missing for parameter "args"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:23 Type of parameter "kwargs" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:23 Type annotation is missing for parameter "kwargs"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:24 Argument type is unknown
+Â Â Argument corresponds to parameter "dtype" in function "to"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:24 Argument type is unknown
+Â Â Argument corresponds to parameter "non_blocking" in function "to"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:24 Argument type is unknown
+Â Â Argument corresponds to parameter "copy" in function "to"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:25 Cannot assign to attribute "tensor_type" for class "Tensor"
+Â Â Attribute "tensor_type" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:26 Cannot assign to attribute "tensor_shape" for class "Tensor"
+Â Â Attribute "tensor_shape" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:29 Type of parameter "args" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:29 Type annotation is missing for parameter "args"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:29 Type of parameter "kwargs" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:29 Type annotation is missing for parameter "kwargs"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:32 Type of parameter "args" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:32 Type annotation is missing for parameter "args"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:32 Type of parameter "kwargs" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:32 Type annotation is missing for parameter "kwargs"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:36 Return type, "Size | Unknown | None", is partially unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:36 "shape" overrides symbol of same name in class "TensorBase"
+Â Â "property" is not assignable to "Size"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:39 Type of "tensor_shape" is partially unknown
+Â Â Type of "tensor_shape" is "Size | Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:39 Return type, "Size | Unknown | None", is partially unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type of parameter "in_features" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type annotation is missing for parameter "in_features"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type of parameter "out_features" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type annotation is missing for parameter "out_features"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type annotation is missing for parameter "bias"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type of parameter "device" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type annotation is missing for parameter "device"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type of parameter "dtype" is partially unknown
+Â Â Parameter type is "Unknown | None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:43 Type annotation is missing for parameter "dtype"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type of parameter "state_dict" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type annotation is missing for parameter "state_dict"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type of parameter "prefix" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type annotation is missing for parameter "prefix"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type of parameter "local_metadata" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type annotation is missing for parameter "local_metadata"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type of parameter "strict" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type annotation is missing for parameter "strict"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type of parameter "missing_keys" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type annotation is missing for parameter "missing_keys"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type of parameter "unexpected_keys" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type annotation is missing for parameter "unexpected_keys"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type of parameter "error_msgs" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:50 Type annotation is missing for parameter "error_msgs"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:51 Type of "weight" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:51 Type of "get" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:52 Type of "bias" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:52 Type of "get" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:55 Type of "append" is unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:56 Argument type is unknown
+Â Â Argument corresponds to parameter "size" in function "zeros"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:56 Argument type is unknown
+Â Â Argument corresponds to parameter "size" in function "zeros"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:59 Argument type is unknown
+Â Â Argument corresponds to parameter "data" in function "__init__"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:62 Argument type is unknown
+Â Â Argument corresponds to parameter "data" in function "__init__"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:64 Argument type is unknown
+Â Â Argument corresponds to parameter "size" in function "zeros"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:69 Type of "weight" is partially unknown
+Â Â Type of "weight" is "Tensor | Unknown"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:71 "to" is not a known attribute of "None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:77 Argument type is partially unknown
+Â Â Argument corresponds to parameter "weight" in function "linear"
+Â Â Argument type is "Tensor | Unknown"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:81 Return type, "dict[Unknown, Unknown]", is partially unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:81 Expected type arguments for generic class "dict"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:82 Return type, "dict[Unknown, Unknown]", is partially unknown
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:92 Type of "dtypes" is partially unknown
+Â Â Type of "dtypes" is "set[Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:100 Variable "tensors" is not accessed
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:118 Type of "from_numpy" is partially unknown
+Â Â Type of "from_numpy" is "(ndarray: Unknown) -> Tensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:138 Type of "mapped_tensor" is partially unknown
+Â Â Type of "mapped_tensor" is "Tensor | Unknown"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:140 Type of "key_value_pairs" is partially unknown
+Â Â Type of "key_value_pairs" is "tuple[tuple[str, Tensor | Unknown | GGMLTensor]]"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:142 Argument type is partially unknown
+Â Â Argument corresponds to parameter "value" in function "apply_to_key_value"
+Â Â Argument type is "Tensor | Unknown | GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:144 Type of "value" is partially unknown
+Â Â Type of "value" is "Tensor | Unknown | GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:145 Argument type is partially unknown
+Â Â Argument corresponds to parameter "obj" in function "hasattr"
+Â Â Argument type is "Tensor | Unknown | GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:145 Argument type is partially unknown
+Â Â Argument corresponds to parameter "obj" in function "hasattr"
+Â Â Argument type is "Tensor | Unknown | GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:147 Argument type is partially unknown
+Â Â Argument corresponds to parameter "o" in function "getattr"
+Â Â Argument type is "Tensor | Unknown | GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:148 Argument type is partially unknown
+Â Â Argument corresponds to parameter "o" in function "getattr"
+Â Â Argument type is "Tensor | Unknown | GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:150 Argument type is partially unknown
+Â Â Argument corresponds to parameter "obj" in function "hasattr"
+Â Â Argument type is "Tensor | Unknown | GGMLTensor"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:151 Type of "add" is partially unknown
+Â Â Type of "add" is "(element: Unknown, /) -> None"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:151 Type of "dtype" is partially unknown
+Â Â Type of "dtype" is "dtype | Unknown"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:154 Argument type is partially unknown
+Â Â Argument corresponds to parameter "dtype" in function "__init__"
+Â Â Argument type is "set[Unknown]"
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:164 Condition will always evaluate to True since the types "Tensor | Module" and "None" have no overlap

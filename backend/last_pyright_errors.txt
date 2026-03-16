@@ -1,0 +1,2 @@
+h:\airt\ltx\backend\services\fast_video_pipeline\gguf_utils.py:37 "shape" overrides symbol of same name in class "TensorBase"
+  "property" is not assignable to "Size"

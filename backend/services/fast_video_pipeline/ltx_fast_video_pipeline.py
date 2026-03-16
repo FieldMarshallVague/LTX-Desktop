@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 import os
-from typing import Final, cast
+from typing import Any, cast
 
 import torch
 import logging
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class LTXFastVideoPipeline:
-    pipeline_kind: Final = "fast"
+    pipeline_kind: str
 
     @staticmethod
     def create(
@@ -26,6 +26,7 @@ class LTXFastVideoPipeline:
         upsampler_path: str,
         device: torch.device,
         distilled_lora_path: str | None = None,
+        model_type: str = "fast",
     ) -> "LTXFastVideoPipeline":
         return LTXFastVideoPipeline(
             checkpoint_path=checkpoint_path,
@@ -33,6 +34,7 @@ class LTXFastVideoPipeline:
             upsampler_path=upsampler_path,
             device=device,
             distilled_lora_path=distilled_lora_path,
+            model_type=model_type,
         )
 
     def __init__(
@@ -42,7 +44,9 @@ class LTXFastVideoPipeline:
         upsampler_path: str, 
         device: torch.device,
         distilled_lora_path: str | None = None,
+        model_type: str = "fast",
     ) -> None:
+        self.pipeline_kind = model_type
         from ltx_core.quantization import QuantizationPolicy
         from ltx_pipelines.distilled import DistilledPipeline
 
@@ -57,7 +61,7 @@ class LTXFastVideoPipeline:
             distilled_checkpoint_path=checkpoint_path,
             gemma_root=cast(str, gemma_root),
             spatial_upsampler_path=upsampler_path,
-            loras=loras,
+            loras=cast(Any, loras),
             device=device,
             quantization=quant_policy,
         )

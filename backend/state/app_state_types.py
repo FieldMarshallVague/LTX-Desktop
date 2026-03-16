@@ -81,6 +81,7 @@ class TextEncoderState:
     prompt_cache: dict[tuple[str, bool], TextEncodingResult] = field(default_factory=_new_prompt_cache)
     api_embeddings: TextEncodingResult | None = None
     cached_encoder: CachedTextEncoder | None = None
+    text_encoder_path: Path | None = None
 
 
 # ============================================================

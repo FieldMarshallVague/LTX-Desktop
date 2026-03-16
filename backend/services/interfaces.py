@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal
+
 
 from services.a2v_pipeline.a2v_pipeline import A2VPipeline
 from services.depth_processor_pipeline.depth_processor_pipeline import DepthProcessorPipeline

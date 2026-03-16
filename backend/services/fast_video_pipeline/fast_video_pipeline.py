@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, ClassVar, Literal, Protocol
+from typing import TYPE_CHECKING, Protocol
 
 from api_types import ImageConditioningInput
 
@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 class FastVideoPipeline(Protocol):
-    pipeline_kind: ClassVar[Literal["fast"]]
+    pipeline_kind: str
 
     @staticmethod
     def create(
@@ -19,6 +19,8 @@ class FastVideoPipeline(Protocol):
         gemma_root: str | None,
         upsampler_path: str,
         device: torch.device,
+        distilled_lora_path: str | None = None,
+        model_type: str = "fast",
     ) -> "FastVideoPipeline":
         ...
 

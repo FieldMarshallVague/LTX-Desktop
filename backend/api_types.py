@@ -156,18 +156,18 @@ class ModelsStatusResponse(BaseModel):
     has_api_key: bool
     text_encoder_status: TextEncoderStatus
     use_local_text_encoder: bool
-    gguf_models: list[GgufModelStatus] = Field(default_factory=list)
+    gguf_models: list[GgufModelStatus] = Field(default_factory=lambda: [])
 
 
 class DownloadProgressResponse(BaseModel):
     status: str
-    current_downloading_file: ModelFileType | None
+    current_downloading_file: str | None
     current_file_progress: float
     total_progress: float
     total_downloaded_bytes: int
     expected_total_bytes: int
-    completed_files: set[ModelFileType]
-    all_files: set[ModelFileType]
+    completed_files: set[str]
+    all_files: set[str]
     error: str | None
     speed_bytes_per_sec: float
 

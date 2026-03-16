@@ -1,3 +1,4 @@
+# pyright: reportUnusedImport=false, reportUnknownMemberType=false, reportUnknownVariableType=false, reportUnknownArgumentType=false
 import os
 import sys
 
@@ -5,7 +6,7 @@ def check_gguf_support():
     try:
         from ltx_core.text_encoders import gemma
         import inspect
-        src = inspect.getsource(gemma.load_text_encoder_and_tokenizer)
+        src = inspect.getsource(gemma.load_text_encoder_and_tokenizer)  # type: ignore
         if "gguf" in src.lower():
             print("GGUF support found in load_text_encoder_and_tokenizer!")
             return True

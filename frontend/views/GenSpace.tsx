@@ -883,7 +883,22 @@ export function GenSpace() {
       conditioningStrength: number
     }
   } | null>(null)
-  const [settings, setSettings] = useState(() => ({ ...DEFAULT_VIDEO_SETTINGS }))
+  const [settings, setSettings] = useState(() => {
+    try {
+      const saved = localStorage.getItem('ltxGenSpaceSettings')
+      if (saved) {
+        return { ...DEFAULT_VIDEO_SETTINGS, ...JSON.parse(saved) }
+      }
+    } catch (e) {
+      // ignore
+    }
+    return { ...DEFAULT_VIDEO_SETTINGS }
+  })
+
+  // Persist settings whenever they change
+  useEffect(() => {
+    localStorage.setItem('ltxGenSpaceSettings', JSON.stringify(settings))
+  }, [settings])
   const applyForcedVideoSettings = useCallback(
     (next: { model: string; duration: number; videoResolution: string; fps: number; audio: boolean; aspectRatio: string; imageResolution: string; variations: number }) => {
       if (!shouldVideoGenerateWithLtxApi || mode !== 'video') return next
@@ -1047,7 +1062,7 @@ export function GenSpace() {
 
   useEffect(() => {
     if (!shouldVideoGenerateWithLtxApi || mode !== 'video') return
-    setSettings((prev) => applyForcedVideoSettings({ ...prev, model: 'fast' }))
+    setSettings((prev: GenerationSettings) => applyForcedVideoSettings({ ...prev, model: 'fast', aspectRatio: prev.aspectRatio || '16:9', variations: prev.variations || 1 }))
   }, [applyForcedVideoSettings, mode, shouldVideoGenerateWithLtxApi])
 
   useEffect(() => {
@@ -1065,7 +1080,7 @@ export function GenSpace() {
   // Force pro model + resolution when audio is attached (A2V only supports pro @ 1080p 16:9)
   useEffect(() => {
     if (inputAudio) {
-      setSettings(prev => applyForcedVideoSettings({ ...prev, model: 'pro', aspectRatio: '16:9' }))
+      setSettings((prev: GenerationSettings) => applyForcedVideoSettings({ ...prev, model: 'pro', aspectRatio: '16:9', variations: prev.variations || 1 }))
     }
   }, [inputAudio]) // eslint-disable-line react-hooks/exhaustive-deps
 
